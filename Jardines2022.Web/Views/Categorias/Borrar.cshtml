@@ -1,0 +1,45 @@
+﻿@model Jardines2022.Web.Models.Categorias.CategoriaEditVm
+
+@{
+    ViewBag.Title = "Borrar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Borrar</h2>
+
+<main id="main" class="main">
+    <h3>¿Estas seguro de querer eliminar este registro?</h3>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.NombreCategoria)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NombreCategoria)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group mt-3">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                    @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-success" })
+                </div>
+            </div>
+        }
+    </div>
+</main>

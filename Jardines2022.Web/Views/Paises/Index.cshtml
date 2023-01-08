@@ -1,0 +1,95 @@
+﻿@model List<Jardines2022.Entidades.Entidades.Pais>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/assets/css/style.css")
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Tables / General - NiceAdmin Bootstrap Template</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="~/Content/assets/img/favicon.png" rel="icon">
+    <link href="~/Content/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/Content/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/Content/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/Content/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="~/Content/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="~/Content/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="~/Content/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="~/Content/assets/css/style.css" rel="stylesheet">
+
+    <!-- =======================================================
+    * Template Name: NiceAdmin - v2.4.0
+    * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+    
+</head>
+
+<body>
+    
+    <main id="main" class="main">
+        <div class="card">
+            <div class="card-body">
+                <a href="@Url.Action("Create","Paises")" class="btn btn-primary btn-lgs mt-3 bi-plus-lg"> Nuevo País</a>
+            </div>
+        </div>
+        <div class="pagetitle">
+            <h1>Listado de países</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Inicio</a></li>
+                    <li class="breadcrumb-item">Ubicaiones</li>
+                    <li class="breadcrumb-item active">Países</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+        <div class="card">
+            <div class="card-body">
+                <!-- Table with hoverable rows -->
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">País</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var pais in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => pais.NombrePais)</td>
+                                <td>
+                                    @Html.ActionLink("Editar", "Edit", new { id = pais.PaisId }, new { @class = "btn btn-warning" })
+                                    @Html.ActionLink("Borrar", "Borrar", new { id = pais.PaisId }, new { @class = "btn btn-danger" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <!-- End Table with hoverable rows -->
+
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

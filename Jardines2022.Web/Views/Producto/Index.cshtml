@@ -1,0 +1,234 @@
+﻿<div>
+    <main id="main" class="main">
+        <div class="card">
+            <div class="card-body">
+                @*<a href="" class="btn btn-primary btn-lgs mt-3 bi-plus-lg"> Nuevo Producto</a>*@
+                <button type="button" class="btn btn-primary btn-lgs mt-3 bi-plus-lg" onclick="abrirModal()">Nuevo Producto</button>
+            </div>
+        </div>
+        <div class="pagetitle">
+            <h1>Listado de productos</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Inicio</a></li>
+                    <li class="breadcrumb-item">Productos</li>
+                    <li class="breadcrumb-item active">Productos</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+        <div class="card">
+            <div class="card-body">
+                <!-- Table -->
+                <table id="tabla" class="table table-hover" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Latin</th>
+                            <th>Proveedor</th>
+                            <th>Categoria</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Pedido</th>
+                            <th>Reposición</th>
+                            <th>Suspendido</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+<!-- Inicio del modal -->
+<div class="modal fade modal-lg" id="FormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Producto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="txtProductoId" value="0" />
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="txtNombreProducto" class="form-label">Nombre del Producto</label>
+                        <input type="text" class="form-control" id="txtNombreProducto" placeholder="Ingrese el nombre">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="txtNombreLatin" class="form-label">Nombre en Latín</label>
+                        <input type="text" class="form-control" id="txtNombreLatin" placeholder="Ingrese el nombre en latín">
+
+                    </div>
+
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label for="cboProveedor" class="form-label">Proveedor</label>
+                        <select id="cboProveedor" class="form-select" aria-label="Default select example">
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="cboCategoria" class="form-label">Categoria</label>
+                        <select id="cboCategoria" class="form-select" aria-label="Default select example"onchange="cargarCboCategorias()">
+                        </select>
+                    </div>
+
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label for="txtPrecioUnitario" class="form-label">Precio Unitario</label>
+                        <input type="text" class="form-control" id="txtPrecioUnitario" placeholder="00,00$">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="txtStock" class="form-label">Stock</label>
+                        <input type="text" class="form-control" id="txtStock" placeholder="Ingrese el Stock">
+                    </div>
+                    
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label for="txtLVLReposicion" class="form-label">Reposición</label>
+                        <input type="text" class="form-control" id="txtLVLReposicion" placeholder="Unidades en el almacén">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="txtUnidadesPedidas" class="form-label">Pedido</label>
+                        <input type="text" class="form-control" id="txtUnidadesPedidas" placeholder="Unidades Pedidas">
+                    </div>
+                    
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label for="cboSuspendido" class="form-label">Suspendido</label>
+
+                        <select id="cboSuspendido" class="form-select" aria-label="Default select example">
+                            <option value="1">SI</option>
+                            <option value="0">NO</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="IMGMuestra" class="form-label">Imagen de muestra</label>
+                        <input type="text" class="form-control" id="IMGMuestra" placeholder="...">
+                    </div>
+                </div>
+
+
+
+            @*
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div id="mensajeError" class="alert alert-danger" role="alert">
+                            A simple danger alert—check it out!
+                        </div>
+                    </div>
+                </div>
+            *@
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        var tabla;
+
+        $(document).ready(function() {
+            cargarTabla();
+            cargarCboCategorias();
+
+        });
+        //CARGARA DATOS A LA TABLA
+        function cargarTabla() {
+                tabla = $("#tabla").DataTable({
+                responsive: "true",
+                ordering: "false",
+                "ajax": {
+                    url: "@Url.Action("ListarProductos", "Producto")",
+                    type: "GET",
+                    dataType: "json"
+                },
+                "columns": [
+                    { "data": "NombreProducto" },
+                    { "data": "NombreLatin" },
+                    {
+                        "data": "Proveedor",
+                        render: function (data) {
+                        return data.NombreProveedor;
+                        }
+                    },
+                    {
+                        "data": "Categoria",
+                        render: function(data) {
+                            return data.NombreCategoria;
+                        }
+                    },
+                    { "data": "PrecioUnitario" },
+                    { "data": "UnidadesEnStock" },
+                    { "data": "UnidadesEnPedido" },
+                    { "data": "NivelDeReposicion" },
+                    {
+                        "data": "Suspendido",
+                        render: function(valorDeActivo) {
+                            if (valorDeActivo) {
+                                return '<span class="badge text-bg-success">SI</span>';
+                            } else {
+                                return '<span class="badge text-bg-danger">NO</span>';
+
+                            }
+                        }
+                    },
+                    {
+                        "defaultContent": '<button type="button" class="btn btn-warning btn-sm btn-editar"><i class="fas fa-pen"></i></button>' +
+                            '<button type="button" class="btn btn-danger btn-sm btn-borrar" ><i class="fas fa-trash"></i></button>',
+                        "orderable": false,
+                        "searchable": false,
+                        "width": "90px"
+
+                    }
+                ],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json"
+                }
+
+
+            });
+        }
+        //FUNCION PARA ABRIR EL MODAL
+        function abrirModal() {
+            $("#FormModal").modal("show");
+        }
+        //CARGAR LOS COMBOS DEL MODAL
+        function cargarCboCategorias() {
+             jQuery.ajax({
+                url: "@Url.Action("ListarCategorias","Categorias")",
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (categoria) {
+                    console.log(categoria);
+                    //debugger;
+                    $("#cboCategoria").append('<option disabled value="0">'
+                        +"Seleccione" + '</option>');
+                    $.each(categoria.data,
+                        function (index, categoria) {
+                            $("#cboCategoria").append('<option value="'
+                                + categoria.CategoriaId + '">'
+                                + categoria.NombreCategoria + '</option>');
+                        });
+
+                }
+             });
+        }
+    </script>
+}
+
+
