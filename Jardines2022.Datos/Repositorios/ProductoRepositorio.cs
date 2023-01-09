@@ -10,9 +10,9 @@ namespace Jardines2022.Datos.Repositorios
     public class ProductoRepositorio: IProductoRepositorio
     {
         private readonly Jardines2022DbContext context;
-        public ProductoRepositorio(Jardines2022DbContext context)
+        public ProductoRepositorio()
         {
-            this.context = context;
+            context = new Jardines2022DbContext();
         }
 
         public void Borrar(Producto producto)
@@ -70,8 +70,8 @@ namespace Jardines2022.Datos.Repositorios
             try
             {
                 return context.Productos
-                    .Include(p=>p.Categoria)
-                    .Include(p=>p.Proveedor)
+                    .Include(p => p.Categoria)
+                    .Include(p => p.Proveedor)
                     .ToList();
             }
             catch (Exception e)

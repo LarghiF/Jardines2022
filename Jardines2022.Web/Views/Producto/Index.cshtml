@@ -73,7 +73,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="cboCategoria" class="form-label">Categoria</label>
-                        <select id="cboCategoria" class="form-select" aria-label="Default select example"onchange="cargarCboCategorias()">
+                        <select id="cboCategoria" class="form-select" aria-label="Default select example">
                         </select>
                     </div>
 
@@ -111,7 +111,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="IMGMuestra" class="form-label">Imagen de muestra</label>
-                        <input type="text" class="form-control" id="IMGMuestra" placeholder="...">
+                        <input type="text" disabled class="form-control" id="IMGMuestra" placeholder="...">
                     </div>
                 </div>
 
@@ -144,6 +144,7 @@
         $(document).ready(function() {
             cargarTabla();
             cargarCboCategorias();
+            cargarCboProveedores();
 
         });
         //CARGARA DATOS A LA TABLA
@@ -227,7 +228,28 @@
 
                 }
              });
+            
         }
+        function cargarCboProveedores() {
+            jQuery.ajax({
+                url: "@Url.Action("ListarProveedores","Proveedores")",
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (proveedor) {
+                    console.log(proveedor);
+                    $("#cboProveedor").append('<option disabled values="0">'
+                        + "Seleccine" + '</option>');
+                    $.each(proveedor.data,
+                        function (index, proveedor) {
+                            $("#cboProveedor").append('<option value='
+                                + proveedor.ProveedorId + '">'
+                                + proveedor.NombreProveedor + ' </option>');
+                        });
+                }
+            });
+        }
+        
     </script>
 }
 

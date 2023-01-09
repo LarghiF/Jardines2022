@@ -157,6 +157,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PaisesController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\ProveedoresController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1374,6 +1375,8 @@
     <Content Include="webfonts\fa-brands-400.eot" />
     <Content Include="Scripts\loadingoverlay.min.js.map" />
     <Content Include="Views\Producto\Index.cshtml" />
+    <Content Include="Views\Proveedor\Index.cshtml" />
+    <Content Include="Views\Proveedores\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

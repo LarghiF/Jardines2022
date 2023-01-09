@@ -1,0 +1,16 @@
+﻿@section scripts
+{
+    <script>
+        jQuery.ajax({
+            url: "@Url.Action("ListarProveedores", "Proveedores")",
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                debugger;
+                console.log(data);
+            }
+        })
+    </script>
+}
+

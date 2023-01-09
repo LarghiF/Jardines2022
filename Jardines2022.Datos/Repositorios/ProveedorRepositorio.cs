@@ -57,7 +57,10 @@ namespace Jardines2022.Datos.Repositorios
         {
             try
             {
-                return context.Proveedores.ToList();
+                return context.Proveedores
+                    //.Include(p=>p.ciudad)
+                    //.Include(p=>p.pais)
+                    .ToList();
             }
             catch (Exception e)
             {
