@@ -117,7 +117,7 @@
 
 
 
-            @*
+            
                 <div class="row mt-3">
                     <div class="col-12">
                         <div id="mensajeError" class="alert alert-danger" role="alert">
@@ -125,7 +125,7 @@
                         </div>
                     </div>
                 </div>
-            *@
+            
 
             </div>
             <div class="modal-footer">
@@ -140,12 +140,18 @@
 {
     <script>
         var tabla;
+        var filaSeleccionada;
 
         $(document).ready(function() {
             cargarTabla();
             cargarCboCategorias();
             cargarCboProveedores();
+            $("#tabla tbody").on("click", '.btn-editar',
+                function () {
+                    filaSeleccionada = $(this).closest("tr");
+                    var datos = tabla.row(filaSeleccionada).data();
 
+                })
         });
         //CARGARA DATOS A LA TABLA
         function cargarTabla() {
@@ -180,9 +186,9 @@
                         "data": "Suspendido",
                         render: function(valorDeActivo) {
                             if (valorDeActivo) {
-                                return '<span class="badge text-bg-success">SI</span>';
+                                return '<span class="badge text-bg-danger">SI</span>';
                             } else {
-                                return '<span class="badge text-bg-danger">NO</span>';
+                                return '<span class="badge text-bg-success">NO</span>';
 
                             }
                         }
@@ -199,12 +205,23 @@
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json"
                 }
-
-
             });
         }
         //FUNCION PARA ABRIR EL MODAL
         function abrirModal() {
+            $("#mensajeError").hide();
+            $("#txtProductoId").val(0);
+            $("#txtNombreProducto").val("");
+            $("#txtNombreLatin").val("");
+            $("#cboProveedor").val($("#cboProveedor option:first").val());
+            $("#cboCategoria").val($("#cboCategoria option:first").val());
+            $("#txtPrecioUnitario").val("");
+            $("#txtStock").val("");
+            $("#txtLVLReposicion").val("");
+            $("#txtUnidadesPedidas").val("");
+            $("#cboSuspendido").val(0);
+
+
             $("#FormModal").modal("show");
         }
         //CARGAR LOS COMBOS DEL MODAL
@@ -217,8 +234,8 @@
                 success: function (categoria) {
                     console.log(categoria);
                     //debugger;
-                    $("#cboCategoria").append('<option disabled value="0">'
-                        +"Seleccione" + '</option>');
+                    $("#cboCategoria").append('<option value="0">'
+                        + "Seleccione" + '</option>');
                     $.each(categoria.data,
                         function (index, categoria) {
                             $("#cboCategoria").append('<option value="'
@@ -238,17 +255,83 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (proveedor) {
                     console.log(proveedor);
-                    $("#cboProveedor").append('<option disabled values="0">'
-                        + "Seleccine" + '</option>');
+                    debugger;
+                    $("#cboProveedor").append('<option value="0">'
+                        + "Seleccione" + '</option>');
                     $.each(proveedor.data,
                         function (index, proveedor) {
-                            $("#cboProveedor").append('<option value='
+                            $("#cboProveedor").append('<option value="'
                                 + proveedor.ProveedorId + '">'
-                                + proveedor.NombreProveedor + ' </option>');
+                                + proveedor.NombreProveedor + '</option>');
                         });
                 }
             });
         }
+        //GUARDAR PRODUCTO
+        function Guardar() {
+            var producto = {
+                ProductoId: $("#txtProductoId").val(),
+                NombreProducto: $("#txtNombreProducto").val(),
+                NombreLatin: $("#txtNombreLatin").val(),
+                ProveedorId: $("#cboProveedor option:Selected").val(),
+                Proveedor: {
+                    ProveedorId: $("#cboProveedor option:Selected").val(),
+                    NombreProveedor: $("#cboProveedor option:Selected").text(),
+                },
+                CategoriaId: $("#cboCategoria option:Selected").val(),
+                Categoria: {
+                    CategoriaId: $("#cboCategoria option:Selected").val(),
+                    NombreCategoria: $("#cboCategoria option:Selected").text(),
+                },
+                PrecioUnitario: $("#txtPrecioUnitario").val(),
+                UnidadesEnStock: $("#txtStock").val(),
+                UnidadesEnPedido: $("#txtUnidadesPedidas").val(),
+                NivelDeReposicion: $("#txtLVLReposicion").val(),
+                Suspendido: $("#cboSuspendido").val() == 1 ? true : false
+
+            };
+            console.log(producto);
+            debugger;
+            var request = new FormData();
+            request.append("objeto", JSON.stringify(producto));
+
+            jQuery.ajax({
+                url: "@Url.Action("Guardar","Producto")",
+                type: "POST",
+                data: request,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    $(".modal-body").LoadingOverlay("hide");
+
+                    if (producto.ProductoId == 0) {
+                        debugger;
+                        if (data.resultado != 0) {
+                            producto.ProductoId = data.resultado;
+                            tabla.row.add(producto).draw(false);
+                            $("#FormModal").modal("hide");
+                        } else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+                    } else {
+                        if (data.resultado != 0) {
+                            tabla.row(filaSeleccionada).data(producto).draw(false);
+                            filaSeleccionada = null;
+                            $("#FormModal").modal("hide");
+                        } else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+                    }
+                },
+                error: function (error) {},
+                beforeSend: function () {}
+                
+            });
+
+        }
+
         
     </script>
 }

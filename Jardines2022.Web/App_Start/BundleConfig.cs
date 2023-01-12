@@ -10,10 +10,12 @@ namespace Jardines2022.Web
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
+
+
             bundles.Add(new Bundle("~/bundles/complementos").Include(
                 "~/Scripts/DataTables/jquery.dataTables.js",
                 "~/Scripts/DataTables/dataTables.responsive.js",
-                "~/Scripts/loadingoverlay/loadingoverlay.min.js",
+                "~/Scripts/loadingoverlay.min.js",
                 "~/Scripts/sweetalert.min.js",
                 "~/Scripts/fontawesome/all.min.js",
                 "~/Scripts/scripts.js"));
