@@ -25,11 +25,10 @@ namespace Jardines2022.Servicios.Servicios
             try
             {
                 repositorio.Borrar(proveedor);
-                unitOfWork.Save();
+                //unitOfWork.Save();
             }
             catch (Exception e)
             {
-
                 throw e;
             }
         }
@@ -47,7 +46,6 @@ namespace Jardines2022.Servicios.Servicios
             }
             catch (Exception e)
             {
-
                 throw e;
             }
         }
@@ -60,7 +58,6 @@ namespace Jardines2022.Servicios.Servicios
             }
             catch (Exception e)
             {
-
                 throw e;
             }
         }
@@ -73,7 +70,6 @@ namespace Jardines2022.Servicios.Servicios
             }
             catch (Exception e)
             {
-
                 throw e;
             }
         }
@@ -83,11 +79,10 @@ namespace Jardines2022.Servicios.Servicios
             try
             {
                 repositorio.Guardar(proveedor);
-                unitOfWork.Save();
+                //unitOfWork.Save();
             }
             catch (Exception e)
             {
-
                 throw e;
             }
         }

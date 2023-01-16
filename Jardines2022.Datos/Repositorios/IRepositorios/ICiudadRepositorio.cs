@@ -11,6 +11,7 @@ namespace Jardines2022.Datos.Repositorios.IRepositorios
     public interface ICiudadRepositorio
     {
         List<CiudadListDto> GetLista();
+        List<Ciudad> GetCiudadesPorPais(int id);
         Ciudad GetCiudadPorId(int id);
         void Guardar(Ciudad ciudad);
         void Borrar(Ciudad ciudad);

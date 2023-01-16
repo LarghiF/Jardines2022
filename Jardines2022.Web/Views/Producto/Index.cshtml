@@ -1,6 +1,7 @@
-﻿<div>
+﻿@{ ViewBag.Title = "Index";}
+<div>
     <main id="main" class="main">
-        <div class="card">
+        <div class="card mt-3">
             <div class="card-body">
                 @*<a href="" class="btn btn-primary btn-lgs mt-3 bi-plus-lg"> Nuevo Producto</a>*@
                 <button type="button" class="btn btn-primary btn-lgs mt-3 bi-plus-lg" onclick="abrirModal()">Nuevo Producto</button>
@@ -17,9 +18,9 @@
             </nav>
         </div><!-- End Page Title -->
         <div class="card">
-            <div class="card-body">
+            <div class="card-body mt-3">
                 <!-- Table -->
-                <table id="tabla" class="table table-hover" style="width:100%">
+                <table id="tabla" class="table display cell-border" style="width:100%">
                     <thead>
                         <tr>
                             <th>Producto</th>
@@ -87,7 +88,7 @@
                         <label for="txtStock" class="form-label">Stock</label>
                         <input type="text" class="form-control" id="txtStock" placeholder="Ingrese el Stock">
                     </div>
-                    
+
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
@@ -98,7 +99,7 @@
                         <label for="txtUnidadesPedidas" class="form-label">Pedido</label>
                         <input type="text" class="form-control" id="txtUnidadesPedidas" placeholder="Unidades Pedidas">
                     </div>
-                    
+
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
@@ -117,7 +118,7 @@
 
 
 
-            
+
                 <div class="row mt-3">
                     <div class="col-12">
                         <div id="mensajeError" class="alert alert-danger" role="alert">
@@ -125,7 +126,7 @@
                         </div>
                     </div>
                 </div>
-            
+
 
             </div>
             <div class="modal-footer">
@@ -150,8 +151,48 @@
                 function () {
                     filaSeleccionada = $(this).closest("tr");
                     var datos = tabla.row(filaSeleccionada).data();
+                    abrirModal(datos);
+                });
+            $("#tabla tbody").on("click", ".btn-borrar",
+                function () {
+                    var productoABorrar = $(this).closest("tr");
+                    var datosProducto = tabla.row(productoABorrar).data();
 
-                })
+                    console.log(datosProducto);
+                    debugger;
+                    swal({
+                        title: "¿Estas seguro?",
+                        text: "¿Quieres eliminar este registro?",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonClass: "btn-danger",
+                        confirmButtonText: "SI",
+                        cancelButtonText: "NO",
+                        closeOnConfirm: false
+
+                    },
+                        function () {
+                            jQuery.ajax({
+                                url: "@Url.Action("Eliminar","Producto")",
+                                type: "POST",
+                                data: JSON.stringify({ id: datosProducto.ProductoId }),
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
+                                success: function (data) {
+                                    if (data.resultado) {
+                                        tabla.row(productoABorrar).remove().draw();
+                                        swal("Borrado", "registro Eliminado!", "success");
+                                    } else {
+                                        swal("No se ha podido eliminar", data.mensaje, "error");
+                                    }
+                                },
+                                error: function (error) { console.log(error); },
+                                beforeSend: function () { }
+                            });
+                        }
+                    );
+
+                });
         });
         //CARGARA DATOS A LA TABLA
         function cargarTabla() {
@@ -189,7 +230,6 @@
                                 return '<span class="badge text-bg-danger">SI</span>';
                             } else {
                                 return '<span class="badge text-bg-success">NO</span>';
-
                             }
                         }
                     },
@@ -208,7 +248,7 @@
             });
         }
         //FUNCION PARA ABRIR EL MODAL
-        function abrirModal() {
+        function abrirModal(jsonProducto) {
             $("#mensajeError").hide();
             $("#txtProductoId").val(0);
             $("#txtNombreProducto").val("");
@@ -220,8 +260,18 @@
             $("#txtLVLReposicion").val("");
             $("#txtUnidadesPedidas").val("");
             $("#cboSuspendido").val(0);
-
-
+            if (jsonProducto!=null) {
+                $("#txtProductoId").val(jsonProducto.ProductoId);
+                $("#txtNombreProducto").val(jsonProducto.NombreProducto);
+                $("#txtNombreLatin").val(jsonProducto.NombreLatin);
+                $("#cboProveedor").val(jsonProducto.ProveedorId);
+                $("#cboCategoria").val(jsonProducto.CategoriaId);
+                $("#txtPrecioUnitario").val(jsonProducto.PrecioUnitario);
+                $("#txtStock").val(jsonProducto.UnidadesEnStock);
+                $("#txtLVLReposicion").val(jsonProducto.NivelDeReposicion);
+                $("#txtUnidadesPedidas").val(jsonProducto.UnidadesEnPedido);
+                $("#cboSuspendido").val(jsonProducto.Suspendido==true?1:0);
+            }
             $("#FormModal").modal("show");
         }
         //CARGAR LOS COMBOS DEL MODAL
@@ -245,7 +295,7 @@
 
                 }
              });
-            
+
         }
         function cargarCboProveedores() {
             jQuery.ajax({
@@ -326,13 +376,18 @@
                     }
                 },
                 error: function (error) {},
-                beforeSend: function () {}
-                
+                beforeSend: function () {
+                    $(".modal-body").LoadingOverlay("show", {
+                        imageResizeFactory: 2,
+                        text: "Guardando...",
+                        size: 14
+                    });
+                }
+
             });
 
         }
 
-        
     </script>
 }
 

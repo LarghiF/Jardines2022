@@ -11,6 +11,7 @@ namespace Jardines2022.Servicios.Servicios.IServicios
     public interface ICiudadServicio
     {
         List<CiudadListDto> GetLista();
+        List<Ciudad> GetCiudadesPorPais(int id);
         Ciudad GetCiudadPorId(int id);
         void Guardar(Ciudad ciudad);
         void Borrar(Ciudad ciudad);

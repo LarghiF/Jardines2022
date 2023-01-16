@@ -6,6 +6,8 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <title>Jardines</title>
+    @Styles.Render("~/Content/css")
+    @*@Scripts.Render("~/bundles/bootstrap")*@
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -181,7 +183,7 @@
                 </a>
                 <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="tables-general.html">
+                        <a href="@Url.Action("Index","Proveedores")">
                             <i class="bi bi-circle"></i><span>Provedores</span>
                         </a>
                     </li>
@@ -243,8 +245,15 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/complementos")
+    @*@Scripts.Render("~/bundles/bootstrap")*@
 
-    @Scripts.Render("~/bundles/bootstrap")
+    @*
+        @Scripts.Render("~/bundles/bootstrap")
+
+        la parte de bootstrap me presenta conflicto con el menu desplegable del perfil de usuario
+
+
+    *@
     @RenderSection("scripts", required: false)
 
 </body>

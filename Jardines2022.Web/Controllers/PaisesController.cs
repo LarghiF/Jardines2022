@@ -29,6 +29,12 @@ namespace Jardines2022.Web.Controllers
             return View(lista);
         }
         [HttpGet]
+        public JsonResult ListarPaises()
+        {
+            var lista = servicio.GetLista();
+            return Json(new { data = lista }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
         public ActionResult Create()
         {
             return View();

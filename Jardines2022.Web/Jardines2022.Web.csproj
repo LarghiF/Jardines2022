@@ -1375,7 +1375,6 @@
     <Content Include="webfonts\fa-brands-400.eot" />
     <Content Include="Scripts\loadingoverlay.min.js.map" />
     <Content Include="Views\Producto\Index.cshtml" />
-    <Content Include="Views\Proveedor\Index.cshtml" />
     <Content Include="Views\Proveedores\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

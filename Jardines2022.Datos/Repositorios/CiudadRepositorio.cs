@@ -106,5 +106,20 @@ namespace Jardines2022.Datos.Repositorios
                 throw e;
             }
         }
+
+        public List<Ciudad> GetCiudadesPorPais(int id)
+        {
+            try
+            {
+                return context.Ciudades
+                    .OrderBy(c => c.NombreCiudad)
+                    .Where(c => c.PaisId == id)
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

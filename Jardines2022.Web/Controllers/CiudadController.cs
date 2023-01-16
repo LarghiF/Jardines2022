@@ -32,6 +32,12 @@ namespace Jardines2022.Web.Controllers
 
         }
         [HttpGet]
+        public JsonResult ListarCiudadesPorPais(int id)
+        {
+            var lista = servicio.GetCiudadesPorPais(id);
+            return Json(lista, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
         public ActionResult Create()
         {
             CiudadEditVm ciudadEditVm = new CiudadEditVm()

@@ -94,5 +94,24 @@ namespace Jardines2022.Web.Controllers
             }
             return sb.ToString();
         }
+        [HttpPost]
+        public JsonResult Eliminar(int id)
+        {
+            bool respuesta = false;
+            string mensaje = string.Empty;
+            try
+            {
+                Producto p = servicio.GetProductoPorId(id);
+                servicio.Borrar(p);
+                respuesta = true;
+                mensaje = "Registro eliminado de forma Exitosa!";
+            }
+            catch (Exception e)
+            {
+                respuesta = false;
+                mensaje = e.Message;
+            }
+            return Json(new { resultado = respuesta, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

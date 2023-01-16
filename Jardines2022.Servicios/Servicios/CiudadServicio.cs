@@ -52,6 +52,18 @@ namespace Jardines2022.Servicios.Servicios
             }
         }
 
+        public List<Ciudad> GetCiudadesPorPais(int id)
+        {
+            try
+            {
+                return repositorio.GetCiudadesPorPais(id);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public Ciudad GetCiudadPorId(int id)
         {
             try
