@@ -161,6 +161,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DefaultValues.cs" />
     <Compile Include="Mapping\MappingProfile.cs" />
     <Compile Include="Models\Categorias\CategoriaEditVm.cs" />
     <Compile Include="Models\Categorias\CategoriaListVm.cs" />
@@ -1376,6 +1377,8 @@
     <Content Include="Scripts\loadingoverlay.min.js.map" />
     <Content Include="Views\Producto\Index.cshtml" />
     <Content Include="Views\Proveedores\Index.cshtml" />
+    <Content Include="Views\Ciudad\Edit.cshtml" />
+    <Content Include="Views\Ciudad\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

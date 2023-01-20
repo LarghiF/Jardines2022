@@ -149,13 +149,15 @@
             cargarCboProveedores();
             $("#tabla tbody").on("click", '.btn-editar',
                 function () {
-                    filaSeleccionada = $(this).closest("tr");
+                    //filaSeleccionada = $(this).closest("tr");
+                    filaSeleccionada = $(this).slideUp("tr");
                     var datos = tabla.row(filaSeleccionada).data();
                     abrirModal(datos);
                 });
             $("#tabla tbody").on("click", ".btn-borrar",
                 function () {
-                    var productoABorrar = $(this).closest("tr");
+                    //var productoABorrar = $(this).closest("tr");
+                    var productoABorrar = $(this).slideUp("tr");
                     var datosProducto = tabla.row(productoABorrar).data();
 
                     console.log(datosProducto);

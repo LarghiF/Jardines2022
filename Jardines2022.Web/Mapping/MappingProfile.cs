@@ -24,6 +24,8 @@ namespace Jardines2022.Web.Mapping
         {
             CreateMap<CiudadListDto, CiudadListVm>();
             CreateMap<Ciudad, CiudadEditVm>().ReverseMap();
+            //CreateMap<Ciudad, CiudadListVm>().ReverseMap();
+            CreateMap<Ciudad, CiudadListVm>().ForMember(dest => dest.Pais, opt => opt.MapFrom(src => src.Pais.NombrePais));
         }
 
         private void LoadCategoriaMapping()

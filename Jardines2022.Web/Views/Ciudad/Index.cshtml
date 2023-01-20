@@ -1,10 +1,12 @@
 ﻿@using System.Linq
-@model List<Jardines2022.Web.Models.Ciudad.CiudadListVm>
+@using Jardines2022.Web.Helpers
+@using PagedList.Mvc
+@model PagedList.IPagedList<Jardines2022.Entidades.Dtos.CiudadListDto>
+@*@model List<Jardines2022.Web.Models.Ciudad.CiudadListVm>*@
 
-@{
-    ViewBag.Title = "Index";
+@{ ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
+    SelectList itemsPerPageList = DefaultValues.ItemsPerPageList; }
 
 <h2>Index</h2>
 
@@ -26,6 +28,12 @@
     </div>
     <div class="card">
         <div class="card-body">
+            <div class="mt-3 m-3">
+                @using (Html.BeginForm("Index", "Ciudad", FormMethod.Post))
+                {
+    <label>Items por pág.:</label>
+                    @Html.DropDownList("pageSize", DefaultValues.ItemsPerPageList, new { @id = "pageSize", onchage = "this.form.submit();" })}
+            </div>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -41,21 +49,26 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.NombreCiudad)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Pais)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Editar", "Edit", new { id = item.CiudadId }, new { @class = "btn btn-warning" })
-                                @Html.ActionLink("Borrar", "Borrar", new { id = item.CiudadId }, new { @class = "btn btn-danger" })
-                            </td>
-                        </tr>
-                    }
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreCiudad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pais)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.CiudadId }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Borrar", "Delete", new { id = item.CiudadId }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+}
                 </tbody>
             </table>
+            <div class="m-5">
+                Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de: @Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("Index",
+                                            new { page, itemsPerPage = ViewBag.CurrentItemsPerPage }))
+            </div>
         </div>
     </div>
 </main>

@@ -15,6 +15,6 @@ namespace Jardines2022.Web.Models.Ciudad
         [DisplayName("País")]
         [Required(ErrorMessage ="El campo {0} es requerido")]
         public int PaisId { get; set; }
-        public List<Jardines2022.Entidades.Entidades.Pais> Pais { get; set; }
+        public List<Entidades.Entidades.Pais> Pais { get; set; }
     }
 }

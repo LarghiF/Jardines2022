@@ -1,17 +1,60 @@
-﻿@{
-    ViewBag.Title = "Contact";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+﻿
+@{ ViewBag.Title = "Contacto";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
+@Styles.Render("~/Content/assets/css/style.css")
+<main id="main" class="main">
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+    <section class="contenedor">
+        <div class="seccion">
+            <div class="row">
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="row">
+                            <div class="card-body">
+                                <iframe class="mt-3 rounded" width="100%" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52269.64192064332!2d-58.80452104564027!3d-35.035416734838115!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bd1f9909dc2ab9%3A0xc8bdb392f6acb071!2sVivero%20La%20Peregrina!5e0!3m2!1ses-419!2sar!4v1673900951030!5m2!1ses-419!2sar" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Donde puedes encontrarnos</h5>
+
+                            <!-- Default Table -->
+                            <table class="table" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row"><i class="fa fa-location-arrow"></i></th>
+                                        <td>Calle 203 y Calle 34</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><i class="fa fa-solid fa-phone"></i></th>
+                                        <td>+54 2227 1234567</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><i class="fa fa-envelope"></i></th>
+                                        <td>jardinesverdes@gmail.com</td>
+                                    </tr>
+                                    <tr>
+                                        <th><i class="bi bi-instagram"></i></th>
+                                        <td class="text">jardinesverdes.ig</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- End Default Table Example -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

@@ -159,7 +159,8 @@
             $("#txtNombreProveedor").val("");
             $("#txtDireccion").val("");
             $("#txtCP").val("");
-            $("#cboPais").val($("#cboPais option:first"));
+            $("#cboPais").val($("#cboPais option:first").val());
+            //$("#cboCiudad").val($("#cboCiudad option:first").val());
             $("#cboCiudad").empty();
             if (jsonProveedor != null) {
                 $("#txtProveedorId").val(jsonProveedor.ProveedorId);
@@ -167,6 +168,7 @@
                 $("#txtDireccion").val(jsonProveedor.Direccion);
                 $("#txtCP").val(jsonProveedor.CodigoPostal);
                 $("#cboPais").val(jsonProveedor.PaisId);
+                CargarCboCiudad(jsonProveedor.PaisId);
                 $("#cboCiudad").val(jsonProveedor.CiudadId);
             }
             $("#FormModal").modal("show");
@@ -222,16 +224,17 @@
                     console.log(pais);
                     $("#cboPais").append('<option value="0">' + "Seleccionar" + '</option>');
                     $.each(pais.data, function (index, pais) {
-                        $("#cboPais").append('<option value="' + pais.PaisId + '">'+pais.NombrePais + '</option>');
+                        $("#cboPais").append('<option value="' + pais.PaisId + '">' + pais.NombrePais + '</option>');
                     });
                 }
             });
         }
         function CargarCboCiudad() {
             $("#cboCiudad").empty();
-            $("#cboCiudad").append('<option value="0" disabled >Seleccionar</option>');
+            $("#cboCiudad").append('<option value="0">Seleccionar</option>');
+
             $.ajax({
-                url: '@Url.Action("ListarCiudadesPorPais", "Ciudad")',
+                url: '@Url.Action("ListarCiudadesPorPais","Ciudad")',
                 type: 'GET',
                 dataType: 'json',
                 data: {
@@ -239,13 +242,15 @@
                 },
                 success: function (ciudades) {
                     console.log(ciudades);
-                    $.each(ciudades, function (i, ciudad) {
-                        $("#cboCiudad").append('<option value="' + ciudad.CiudadId + '">' + ciudad.NombreCiudad + '</option>');
-                    });
+                    //debugger;
+                    $.each(ciudades,
+                        function(i, ciudad) {
+                            $("#cboCiudad").append('<option value="' + ciudad.CiudadId + '">' + ciudad.NombreCiudad + '</option>');
+                        });
                     $("#cboCiudad").val($("#cboCiudad option:first").val());
                 },
-                error: function (ex) {
-                    alert('Error al cargar las ciudades.' + ex);
+                error: function(ex) {
+                    alert('Error al intentar cargar las ciudades.' + ex);
                 }
             });
             return false;
