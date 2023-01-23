@@ -29,6 +29,7 @@ namespace Jardines2022.Datos
         public DbSet<Ciudad> Ciudades { get; set; }
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Proveedor> Proveedores { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
 
     }
 }

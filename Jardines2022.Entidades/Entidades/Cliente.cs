@@ -16,6 +16,11 @@ namespace Jardines2022.Entidades.Entidades
         public string CodigoPostal { get; set; }
         public int PaisId { get; set; }
         public int CiudadId { get; set; }
+        public string correo { get; set; }
+        public string clave { get; set; }
+        public bool restablecer { get; set; }
+        public int RolId { get; set; }
+        public Rol Rol { get; set; }
         public Pais Pais { get; set; }
         public Ciudad Ciudad { get; set; }
     }

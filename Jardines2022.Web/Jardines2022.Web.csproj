@@ -152,6 +152,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccesoController.cs" />
     <Compile Include="Controllers\CategoriasController.cs" />
     <Compile Include="Controllers\CiudadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -162,11 +163,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DefaultValues.cs" />
+    <Compile Include="Helpers\HelperCliente.cs" />
     <Compile Include="Mapping\MappingProfile.cs" />
     <Compile Include="Models\Categorias\CategoriaEditVm.cs" />
     <Compile Include="Models\Categorias\CategoriaListVm.cs" />
     <Compile Include="Models\Ciudad\CiudadEditVm.cs" />
     <Compile Include="Models\Ciudad\CiudadListVm.cs" />
+    <Compile Include="Models\Clientes\ClienteEditVm.cs" />
     <Compile Include="Models\Paises\PaisEditVm.cs" />
     <Compile Include="Models\Paises\PaisListVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1379,6 +1382,8 @@
     <Content Include="Views\Proveedores\Index.cshtml" />
     <Content Include="Views\Ciudad\Edit.cshtml" />
     <Content Include="Views\Ciudad\Delete.cshtml" />
+    <Content Include="Views\Acceso\LogIn.cshtml" />
+    <Content Include="Views\Acceso\Registrarse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

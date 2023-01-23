@@ -52,19 +52,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityTypeConfiguration\CiudadEntityTypeConfiguration.cs" />
+    <Compile Include="EntityTypeConfiguration\ClienteEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfiguration\PaisesEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfiguration\ProductosEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfiguration\ProveedoresEntityTypeConfiguration.cs" />
+    <Compile Include="EntityTypeConfiguration\RolEntityTypeConfiguration.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Jardines2022DbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\CategoriaRepositorio.cs" />
     <Compile Include="Repositorios\CiudadRepositorio.cs" />
+    <Compile Include="Repositorios\ClienteRepositorio.cs" />
     <Compile Include="Repositorios\IRepositorios\ICategoriaRepositorio.cs" />
     <Compile Include="Repositorios\IRepositorios\ICiudadRepositorio.cs" />
+    <Compile Include="Repositorios\IRepositorios\IClienteRepositorio.cs" />
     <Compile Include="Repositorios\IRepositorios\IPaisesRepositorio.cs" />
     <Compile Include="Repositorios\IRepositorios\IProductoRepositorio.cs" />
     <Compile Include="Repositorios\IRepositorios\IProveedorRepositorio.cs" />
+    <Compile Include="Repositorios\IRepositorios\IRolRepositorio.cs" />
     <Compile Include="Repositorios\PaisesRepositorio.cs" />
     <Compile Include="Repositorios\ProductoRepositorio.cs" />
     <Compile Include="Repositorios\ProveedorRepositorio.cs" />

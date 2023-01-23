@@ -44,8 +44,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicios\CategoriaServicio.cs" />
     <Compile Include="Servicios\CiudadServicio.cs" />
+    <Compile Include="Servicios\ClienteServicio.cs" />
     <Compile Include="Servicios\IServicios\ICategoriaServicio.cs" />
     <Compile Include="Servicios\IServicios\ICiudadServicio.cs" />
+    <Compile Include="Servicios\IServicios\IClienteServicio.cs" />
     <Compile Include="Servicios\IServicios\IPaisesServicio.cs" />
     <Compile Include="Servicios\IServicios\IProductoServicio.cs" />
     <Compile Include="Servicios\IServicios\IProveedorServicio.cs" />

@@ -146,8 +146,7 @@ namespace Jardines2022.Web.Controllers
             }
             catch (Exception e)
             {
-                CiudadEditVm ciudadEditVm = mapper.Map<CiudadEditVm>(c);
-                ModelState.AddModelError(string.Empty, e.Message);
+                CiudadListVm ciudadEditVm = mapper.Map<CiudadListVm>(c);
                 return View(ciudadEditVm);
             }
         }
