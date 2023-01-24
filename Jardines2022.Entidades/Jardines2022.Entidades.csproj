@@ -44,13 +44,14 @@
     <Compile Include="Dtos\CiudadListDto.cs" />
     <Compile Include="Entidades\Categoria.cs" />
     <Compile Include="Entidades\Ciudad.cs" />
-    <Compile Include="Entidades\Cliente.cs" />
+    <Compile Include="Entidades\Persona.cs" />
     <Compile Include="Entidades\DetalleOrden.cs" />
     <Compile Include="Entidades\Orden.cs" />
     <Compile Include="Entidades\Pais.cs" />
     <Compile Include="Entidades\Producto.cs" />
     <Compile Include="Entidades\Proveedor.cs" />
     <Compile Include="Entidades\Rol.cs" />
+    <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -6,22 +6,21 @@ using System.Threading.Tasks;
 
 namespace Jardines2022.Entidades.Entidades
 {
-    public class Cliente
+    public class Persona
     {
-        public int ClienteId { get; set; }
+        public int PersonaId { get; set; }
         public string Codigo { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Direccion { get; set; }
         public string CodigoPostal { get; set; }
+        public string DNI { get; set; }
+        public int UsuarioId { get; set; }
         public int PaisId { get; set; }
         public int CiudadId { get; set; }
-        public string correo { get; set; }
-        public string clave { get; set; }
-        public bool restablecer { get; set; }
-        public int RolId { get; set; }
         public Rol Rol { get; set; }
         public Pais Pais { get; set; }
         public Ciudad Ciudad { get; set; }
+        public Usuario Usuario { get; set; }
     }
 }

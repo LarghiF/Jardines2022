@@ -80,8 +80,8 @@ namespace Jardines2022.Web.App_Start
             kernel.Bind<IProveedorRepositorio>().To<ProveedorRepositorio>().InRequestScope();
             kernel.Bind<IProveedorServicio>().To<ProveedorServicio>().InRequestScope();
 
-            kernel.Bind<IClienteRepositorio>().To<ClienteRepositorio>().InRequestScope();
-            kernel.Bind<IClienteServicio>().To<ClienteServicio>().InRequestScope();
+            kernel.Bind<IUsuarioRepositorio>().To<UsuarioRepositorio>().InRequestScope();
+            kernel.Bind<IUsuarioServicio>().To<UsuarioServicio>().InRequestScope();
 
             kernel.Bind<IUnitOfWork>().To<UnitOfWork>().InRequestScope();
 

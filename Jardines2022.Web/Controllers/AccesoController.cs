@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
 using Jardines2022.Entidades.Entidades;
-using Jardines2022.Servicios.Servicios;
 using Jardines2022.Servicios.Servicios.IServicios;
 using Jardines2022.Web.App_Start;
 using Jardines2022.Web.Helpers;
-using Jardines2022.Web.Models.Clientes;
+using Jardines2022.Web.Models.Usuario;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -16,15 +12,11 @@ namespace Jardines2022.Web.Controllers
 {
     public class AccesoController : Controller
     {
-        private readonly IClienteServicio servicio;
-        private readonly IPaisesServicio paisesServicio;
-        private readonly ICiudadServicio ciudadServicio;
+        private readonly IUsuarioServicio servicio;
         private readonly IMapper mapper;
-        public AccesoController(ClienteServicio servicio)
+        public AccesoController(UsuarioServicio servicio)
         {
             this.servicio=servicio;
-            paisesServicio = new PaisesServicio();
-            ciudadServicio = new CiudadServicio();
             this.mapper = AutoMapperConfig.Mapper;
         }
         // GET: Acceso
@@ -34,7 +26,6 @@ namespace Jardines2022.Web.Controllers
         }
         public ActionResult Registrarse()
         {
-            var lista = servicio.GetLista();
             return View();
         }
         [HttpPost]
@@ -43,24 +34,24 @@ namespace Jardines2022.Web.Controllers
             try
             {
                 var claveEncriptada = HelperCliente.Encriptar(clave);
-                Cliente cliente = servicio.GetClientePorCorreoYClave(correo, claveEncriptada);
-                if (cliente==null)
+                Usuario usuario = servicio.GetUsuarioCorreoYClave(correo, claveEncriptada);
+                if (usuario==null)
                 {
                     ViewBag.Error = "Error el usuario o la clave no coinciden";
                     return View();
                 }
                 else
                 {
-                    if (cliente.restablecer)
+                    if (usuario.Restablecer)
                     {
-                        TempData["clienteId"] = cliente.ClienteId;
+                        TempData["UsuarioId"] = usuario.UsuarioId;
                         return RedirectToAction("CambiarClave");
                     }
                     else
                     {
-                        FormsAuthentication.SetAuthCookie(cliente.correo, false);
-                        Session["clienteId"] = cliente;
-                        TempData["clienteId"] = null;
+                        FormsAuthentication.SetAuthCookie(usuario.Correo, false);
+                        Session["UsuarioId"] = usuario;
+                        TempData["UsuarioId"] = null;
                         ViewBag.Error = null;
                         return RedirectToAction("Index", "Home");
                     }
@@ -72,46 +63,39 @@ namespace Jardines2022.Web.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Registrarse(ClienteEditVm clienteEditVm)
+        public ActionResult Registrarse(UsuarioEditVm usuarioEditVm)
         {
             if (!ModelState.IsValid)
             {
-                return View(clienteEditVm);
+                return View(usuarioEditVm);
             }
-            ViewData["Nombre"] = clienteEditVm.Nombre;
-            ViewData["Apellido"] = clienteEditVm.Apellido;
-            ViewData["Correo"] = clienteEditVm.Correo;
+            ViewData["Correo"] = usuarioEditVm.Correo;
             try
             {
-                if (clienteEditVm.Clave!=clienteEditVm.ConfirmarClave)
+                if (usuarioEditVm.Clave!= usuarioEditVm.ConfirmarClave)
                 {
                     ViewBag.Error = "Clave erronea!";
-                    return View(clienteEditVm);
+                    return View(usuarioEditVm);
                 }
-                Cliente c = mapper.Map<Cliente>(clienteEditVm);
-                if (servicio.ExisteCliente(c))
+                Usuario usuario = mapper.Map<Usuario>(usuarioEditVm);
+                if (servicio.ExisteCorreo(usuario.Correo))
                 {
                     ViewBag.Error = "Ya se encuentra registrado!";
-                    return View(clienteEditVm);
+                    return View(usuarioEditVm);
                 }
-                if (servicio.ExisteCorreo(c.correo))
-                {
-                    ViewBag.Error = "Ya se encuentra registrado!";
-                    return View(clienteEditVm);
-                }
-                c.clave = HelperCliente.Encriptar(c.clave);
-                servicio.Guardar(c);
-                ViewData["Nombre"] = null;
-                ViewData["Apellido"] = null;
+                usuario.Clave = HelperCliente.Encriptar(usuario.Clave);
+                string asunto = "Registro Exitoso";
+                string mensaje = $"<h3>Se ha registrado exitosamente en Jardines Verdes<h3><br/><p>Gracias por elegirnos</p>";
+                bool respuesta = HelperCliente.EnviarCorreo(usuario.Correo, asunto, mensaje);
+                servicio.Guardar(usuario);
                 ViewData["Correo"] = null;
-
                 return RedirectToAction("LogIn");
 
             }
             catch (Exception e)
             {
                 ViewBag.Error = e.Message;
-                return View(clienteEditVm);
+                return View(usuarioEditVm);
             }
         }
     }

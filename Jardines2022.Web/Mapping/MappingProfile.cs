@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using AutoMapper;
+﻿using AutoMapper;
 using Jardines2022.Entidades.Dtos;
 using Jardines2022.Entidades.Entidades;
 using Jardines2022.Web.Models.Categorias;
 using Jardines2022.Web.Models.Ciudad;
-using Jardines2022.Web.Models.Clientes;
 using Jardines2022.Web.Models.Paises;
+using Jardines2022.Web.Models.Usuario;
 
 namespace Jardines2022.Web.Mapping
 {
@@ -19,12 +15,12 @@ namespace Jardines2022.Web.Mapping
             LoadPaisMapping();
             LoadCategoriaMapping();
             LoadCiudadMapping();
-            LoadClienteMapping();
+            LoadUsuarioMapping();
         }
 
-        private void LoadClienteMapping()
+        private void LoadUsuarioMapping()
         {
-            CreateMap<Cliente, ClienteEditVm>().ReverseMap();
+            CreateMap<Usuario, UsuarioEditVm>().ReverseMap();
         }
 
         private void LoadCiudadMapping()

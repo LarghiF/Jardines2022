@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 
 namespace Jardines2022.Web.Helpers
 {
@@ -21,6 +18,7 @@ namespace Jardines2022.Web.Helpers
             Encoding encoding = Encoding.UTF8;
             byte[] stream = null;
             StringBuilder sb = new StringBuilder();
+            stream = sh.ComputeHash(encoding.GetBytes(txt));
             foreach (var t in stream)
             {
                 sb.AppendFormat("{0:x2}", t);
@@ -40,7 +38,7 @@ namespace Jardines2022.Web.Helpers
                 mail.IsBodyHtml = true;
                 var smtp = new SmtpClient()
                 {
-                    Credentials = new NetworkCredential("declareilikelasagna@gmail.com", "sweetpotatoes2023"),
+                    Credentials = new NetworkCredential("declareilikelasagna@gmail.com", "jipzzrtlzbhtztno"),
                     Host = "smtp.gmail.com",
                     Port = 587,
                     EnableSsl = true,

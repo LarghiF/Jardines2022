@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Jardines2022.Datos.EntityTypeConfiguration
 {
-    public class ClienteEntityTypeConfiguration: EntityTypeConfiguration<Cliente>
+    public class UsuarioEntityTypeConfiguration: EntityTypeConfiguration<Usuario>
     {
-        public ClienteEntityTypeConfiguration()
+        public UsuarioEntityTypeConfiguration()
         {
-            ToTable("Clientes");
+            ToTable("Usuarios");
         }
     }
 }

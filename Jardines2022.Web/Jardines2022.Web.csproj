@@ -169,9 +169,9 @@
     <Compile Include="Models\Categorias\CategoriaListVm.cs" />
     <Compile Include="Models\Ciudad\CiudadEditVm.cs" />
     <Compile Include="Models\Ciudad\CiudadListVm.cs" />
-    <Compile Include="Models\Clientes\ClienteEditVm.cs" />
     <Compile Include="Models\Paises\PaisEditVm.cs" />
     <Compile Include="Models\Paises\PaisListVm.cs" />
+    <Compile Include="Models\Usuario\UsuarioEditVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

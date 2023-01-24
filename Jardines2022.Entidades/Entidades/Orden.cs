@@ -14,6 +14,6 @@ namespace Jardines2022.Entidades.Entidades
         public DateTime FechaEntrega { get; set; }
         public DateTime FechaEnvio { get; set; }
         public int ClienteId { get; set; }
-        public Cliente Cliente { get; set; }
+        public Persona Cliente { get; set; }
     }
 }
