@@ -12,6 +12,7 @@ namespace Jardines2022.Entidades.Entidades
         public string Correo { get; set; }
         public string Clave { get; set; }
         public bool Restablecer { get; set; }
+        public bool Valido { get; set; }
         public Rol RolId { get; set; }
     }
 }

@@ -56,19 +56,19 @@
                                         <p class="text-center small">Ingresar la contraseña que se te envio por mail</p>
                                     </div>
 
-                                    <form class="row g-3 needs-validation" action="@Url.Action("CambiarClave","Acceso")" method="post">
-                                        <imput class="form-control" name="usuarioId" type="hidden" value="@TempData["usuarioId"]"/>
+                                    <form action="@Url.Action("CambiarClave","Acceso")" method="post">
+                                        <input class="form-control" name="ID" type="hidden" value="@TempData["UserID"]" />
                                         <div class="col-12">
                                             <label for="clave" class="form-label">Clave</label>
-                                            <input type="password" name="clave" class="form-control" autocomplete="off" required value="@ViewData["vClave"]"/>
+                                            <input type="password" name="clave" class="form-control" autocomplete="off" value="@ViewData["vClave"]"/>
                                         </div>
                                         <div class="col-12">
                                             <label for="nuevaClave" class="form-label">Nueva Clave</label>
-                                            <input type="password" name="clave" class="form-control" autocomplete="off" required>
+                                            <input type="password" name="nuevaClave" class="form-control" autocomplete="off" required>
                                         </div>
                                         <div class="col-12">
                                             <label for="confirmarClave" class="form-label">Confirmar Clave</label>
-                                            <input type="password" name="clave" class="form-control" autocomplete="off" required>
+                                            <input type="password" name="confirmarClave" class="form-control" autocomplete="off" required>
                                         </div>
                                         <div class="col-12">
                                             <button class="btn btn-primary w-100" type="submit">Cambiar</button>

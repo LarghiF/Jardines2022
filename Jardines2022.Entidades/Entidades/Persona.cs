@@ -18,7 +18,6 @@ namespace Jardines2022.Entidades.Entidades
         public int UsuarioId { get; set; }
         public int PaisId { get; set; }
         public int CiudadId { get; set; }
-        public Rol Rol { get; set; }
         public Pais Pais { get; set; }
         public Ciudad Ciudad { get; set; }
         public Usuario Usuario { get; set; }

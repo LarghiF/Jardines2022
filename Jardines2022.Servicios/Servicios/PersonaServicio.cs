@@ -70,6 +70,18 @@ namespace Jardines2022.Servicios.Servicios
             }
         }
 
+        public Persona GetPorUID(int id)
+        {
+            try
+            {
+                return repositorio.GetPorUID(id);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public void Guardar(Persona persona)
         {
             try

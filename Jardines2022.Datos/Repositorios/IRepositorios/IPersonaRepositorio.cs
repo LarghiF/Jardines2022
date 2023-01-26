@@ -11,6 +11,7 @@ namespace Jardines2022.Datos.Repositorios.IRepositorios
     {
         List<Persona> GetLista();
         Persona GetPorID(int id);
+        Persona GetPorUID(int id);
         void Guardar(Persona persona);
         void Borrar(Persona persona);
         bool Existe(Persona persona);

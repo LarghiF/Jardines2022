@@ -79,6 +79,18 @@ namespace Jardines2022.Datos.Repositorios
             }
         }
 
+        public Persona GetPorUID(int id)
+        {
+            try
+            {
+                return context.Personas.SingleOrDefault(p => p.UsuarioId == id);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public void Guardar(Persona persona)
         {
             try

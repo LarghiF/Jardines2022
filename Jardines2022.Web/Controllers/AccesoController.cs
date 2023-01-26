@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Jardines2022.Entidades.Entidades;
+using Jardines2022.Servicios.Servicios;
 using Jardines2022.Servicios.Servicios.IServicios;
 using Jardines2022.Web.App_Start;
 using Jardines2022.Web.Helpers;
@@ -13,10 +14,12 @@ namespace Jardines2022.Web.Controllers
     public class AccesoController : Controller
     {
         private readonly IUsuarioServicio servicio;
+        private readonly IPersonaServicio servicioPersona;
         private readonly IMapper mapper;
-        public AccesoController(UsuarioServicio servicio)
+        public AccesoController(UsuarioServicio servicio, PersonaServicio servicioPersona)
         {
             this.servicio=servicio;
+            this.servicioPersona=servicioPersona;
             this.mapper = AutoMapperConfig.Mapper;
         }
         // GET: Acceso
@@ -44,16 +47,28 @@ namespace Jardines2022.Web.Controllers
                 {
                     if (usuario.Restablecer)
                     {
-                        TempData["usuarioId"] = usuario.UsuarioId;
+                        TempData["UserID"] = usuario.UsuarioId;
                         return RedirectToAction("CambiarClave");
                     }
                     else
                     {
+                        Persona p = servicioPersona.GetPorUID(usuario.UsuarioId);
+                        if (p==null)
+                        {
+                            FormsAuthentication.SetAuthCookie(usuario.Correo, false);
+                            Session["User"] = usuario;
+                            Session["Correo"] = usuario.Correo;
+                            ViewBag.Error = null;
+                            return RedirectToAction("Index", "Home");
+                        }
                         FormsAuthentication.SetAuthCookie(usuario.Correo, false);
-                        Session["UsuarioId"] = usuario;
-                        TempData["UsuarioId"] = null;
+                        Session["User"] = usuario;
+                        Session["Correo"] = usuario.Correo;
+                        Session["Nombre"] = p.Nombre;
+                        Session["Apellido"] = p.Apellido;
                         ViewBag.Error = null;
                         return RedirectToAction("Index", "Home");
+
                     }
                 }
             }
@@ -101,7 +116,8 @@ namespace Jardines2022.Web.Controllers
         public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();
-            TempData["UsuarioId"] = null;
+            Session["User"] = null;
+            Session["Correo"] = null;
             return RedirectToAction("Index", "Home");
         }
 
@@ -157,21 +173,19 @@ namespace Jardines2022.Web.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult CambiarClave(string usuarioId,string clave,string nuevaClave,string confirmarClave)
+        public ActionResult CambiarClave(string ID, string clave,string nuevaClave,string confirmarClave)
         {
             try
             {
-                usuarioId = (string)TempData["usuarioId"];
-                Usuario u = servicio.GetPorID(int.Parse(usuarioId));
+                Usuario u = servicio.GetPorID(int.Parse(ID));
                 if (u.Clave!=HelperCliente.Encriptar(clave))
                 {
-                    TempData["usuarioId"] = u.UsuarioId;
                     ViewBag.Error = "Clave erronea!";
                     return View();
                 }
                 else if(nuevaClave!=confirmarClave)
                 {
-                    TempData["ID"] = u.UsuarioId;
+                    TempData["UserID"] = u.UsuarioId;
                     ViewData["vData"] = clave;
                     ViewBag.Error = "No coincide la nueva contraseña con la confirmación";
                     return View();
@@ -179,6 +193,7 @@ namespace Jardines2022.Web.Controllers
                 u.Clave = HelperCliente.Encriptar(nuevaClave);
                 u.Restablecer = false;
                 servicio.Guardar(u);
+                TempData["UserID"] = null;
                 return RedirectToAction("LogIn");
             }
             catch (Exception e)
