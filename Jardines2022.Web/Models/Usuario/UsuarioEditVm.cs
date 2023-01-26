@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jardines2022.Entidades.Entidades;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -19,7 +20,5 @@ namespace Jardines2022.Web.Models.Usuario
         [DisplayName("Confirmar Clave")]
         public string ConfirmarClave { get; set; }
         public bool Restablecer { get; set; }
-        public int RolId { get; set; }
-        List<Entidades.Entidades.Rol> Rol { get; set; }
     }
 }

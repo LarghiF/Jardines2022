@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Jardines2022.Entidades.Entidades
 {
-    public class Rol
+    public enum Rol
     {
-        public int RolId { get; set; }
-        public string Descripcion { get; set; }
+        Amninistrador=1,
+        Moderador,
+        Cliente
     }
 }

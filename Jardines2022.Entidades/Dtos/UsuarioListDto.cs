@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Jardines2022.Entidades.Entidades
+namespace Jardines2022.Entidades.Dtos
 {
-    public class Usuario
+    public class UsuarioListDto
     {
         public int UsuarioId { get; set; }
         public string Correo { get; set; }
         public string Clave { get; set; }
-        public bool Restablecer { get; set; }
-        public Rol RolId { get; set; }
+        public int RolId { get; set; }
     }
 }

@@ -31,7 +31,6 @@ namespace Jardines2022.Datos
         public DbSet<Proveedor> Proveedores { get; set; }
         public DbSet<Persona> Personas { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Rol> Roles { get; set; }
 
     }
 }

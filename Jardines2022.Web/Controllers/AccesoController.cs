@@ -44,7 +44,7 @@ namespace Jardines2022.Web.Controllers
                 {
                     if (usuario.Restablecer)
                     {
-                        TempData["UsuarioId"] = usuario.UsuarioId;
+                        TempData["usuarioId"] = usuario.UsuarioId;
                         return RedirectToAction("CambiarClave");
                     }
                     else
@@ -98,5 +98,95 @@ namespace Jardines2022.Web.Controllers
                 return View(usuarioEditVm);
             }
         }
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            TempData["UsuarioId"] = null;
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult RecuperarCuenta()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult RecuperarCuenta(string correo)
+        {
+            try
+            {
+                Usuario user = servicio.GetUsuarioPorCorreo(correo);
+                if (user==null)
+                {
+                    ViewBag.Eror="Correo mal ingresado o inexistente!";
+                    return View();
+                }
+                user.Restablecer = true;
+                string clave = HelperCliente.GenerarClave();
+
+                string asunto = "Recuperar cuenta";
+                string mensaje = $"<h3>Le recomendamos cambiar la contraseña para mayor seguridad</h3><br/><p>Utilice esta contraseña: '{clave}' para poder ingresar a su cuenta</p>";
+                bool respuesta = HelperCliente.EnviarCorreo(user.Correo, asunto, mensaje);
+                if (respuesta)
+                {
+                    try
+                    {
+                        user.Clave = HelperCliente.Encriptar(clave);
+                        servicio.Guardar(user);
+                        return RedirectToAction("LogIn", "Acceso");
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.Error = e.Message;
+                        return View();
+                    }
+                }
+                else
+                {
+                    ViewBag.Error = "Lo sentimos. No se ha podido enviar el correo!";
+                    return View();
+                }
+            } 
+            catch (Exception e)
+            {
+                ViewBag.Error = e.Message;
+                return View();
+            }
+        }
+        public ActionResult CambiarClave()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CambiarClave(string usuarioId,string clave,string nuevaClave,string confirmarClave)
+        {
+            try
+            {
+                usuarioId = (string)TempData["usuarioId"];
+                Usuario u = servicio.GetPorID(int.Parse(usuarioId));
+                if (u.Clave!=HelperCliente.Encriptar(clave))
+                {
+                    TempData["usuarioId"] = u.UsuarioId;
+                    ViewBag.Error = "Clave erronea!";
+                    return View();
+                }
+                else if(nuevaClave!=confirmarClave)
+                {
+                    TempData["ID"] = u.UsuarioId;
+                    ViewData["vData"] = clave;
+                    ViewBag.Error = "No coincide la nueva contraseña con la confirmación";
+                    return View();
+                }
+                u.Clave = HelperCliente.Encriptar(nuevaClave);
+                u.Restablecer = false;
+                servicio.Guardar(u);
+                return RedirectToAction("LogIn");
+            }
+            catch (Exception e)
+            {
+                ViewBag.Error = e.Message;
+                return View();
+            }
+        }
+
     }
 }

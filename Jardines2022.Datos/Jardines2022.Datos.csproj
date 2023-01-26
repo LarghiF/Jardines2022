@@ -55,7 +55,6 @@
     <Compile Include="EntityTypeConfiguration\PaisesEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfiguration\ProductosEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfiguration\ProveedoresEntityTypeConfiguration.cs" />
-    <Compile Include="EntityTypeConfiguration\RolEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfiguration\UsuarioEntityTypeConfiguration.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Jardines2022DbContext.cs" />

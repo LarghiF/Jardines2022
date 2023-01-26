@@ -1,4 +1,5 @@
 ﻿using Jardines2022.Datos.Repositorios.IRepositorios;
+using Jardines2022.Entidades.Dtos;
 using Jardines2022.Entidades.Entidades;
 using System;
 using System.Collections.Generic;
@@ -27,12 +28,27 @@ namespace Jardines2022.Datos.Repositorios
                 throw e;
             }
         }
-
         public bool ExisteUsuario(Usuario usuario)
         {
             throw new NotImplementedException();
         }
-
+        public List<UsuarioListDto> GetLista()
+        {
+            try
+            {
+                return context.Usuarios
+                    .Select(u => new UsuarioListDto()
+                    {
+                        UsuarioId = u.UsuarioId,
+                        Correo = u.Correo,
+                        RolId = (int)u.RolId
+                    }).ToList();
+            }
+            catch (Exception e)
+            {
+                throw e; 
+            }
+        }
         public Usuario GetPorID(int id)
         {
             try
@@ -44,12 +60,17 @@ namespace Jardines2022.Datos.Repositorios
                 throw e;
             }
         }
-
         public Usuario GetUsuarioCorreoYClave(string correo, string clave)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return context.Usuarios.SingleOrDefault(u => u.Correo == correo && u.Clave == clave);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
-
         public Usuario GetUsuarioPorCorreo(string correo)
         {
             try
@@ -61,15 +82,10 @@ namespace Jardines2022.Datos.Repositorios
                 throw e;
             }
         }
-
         public void Guardar(Usuario usuario)
         {
             try
             {
-                if (usuario.Rol!=null)
-                {
-                    context.Roles.Attach(usuario.Rol);
-                }
                 if (usuario.UsuarioId==0)
                 {
                     context.Usuarios.Add(usuario);

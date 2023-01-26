@@ -13,10 +13,8 @@ namespace Jardines2022.Servicios.Servicios.IServicios
     public class UsuarioServicio : IUsuarioServicio
     {
         private readonly IUsuarioRepositorio repositorio;
-        private readonly Jardines2022DbContext context;
-        public UsuarioServicio(UsuarioRepositorio repositorio,Jardines2022DbContext context)
+        public UsuarioServicio(UsuarioRepositorio repositorio)
         {
-            this.context = context;
             this.repositorio = repositorio;
         }
 
