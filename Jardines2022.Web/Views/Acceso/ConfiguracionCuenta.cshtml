@@ -1,0 +1,251 @@
+﻿@{ViewBag.Title = "Configuracion";}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Perfil</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Inicio</a></li>
+                <li class="breadcrumb-item">Usuario</li>
+                <li class="breadcrumb-item active">Perfil</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+        <div class="row">
+            <div class="col-xl-8">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <form>
+                            <div class="row mb-3">
+                                <label for="txtNombre" class="col-md-4 col-lg-3 col-form-label">Nombre</label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input name="txtNombre" type="text" class="form-control" id="txtNombre">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="txtApellido" class="col-md-4 col-lg-3 col-form-label">Apellido</label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input name="txtApellido" type="text" class="form-control" id="txtApellido">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="txtDNI" class="col-md-4 col-lg-3 col-form-label">DNI</label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input name="txtDNI" type="text" class="form-control" id="txtDNI">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="txtCorreo" class="col-md-4 col-lg-3 col-form-label">Correo</label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input name="txtCorreo" type="text" class="form-control" id="txtCorreo" value="@Session["Correo"]" disabled>
+                                </div>
+                            </div>
+
+
+                            <div class="row mb-3">
+                                <label for="cboPais" class="col-md-4 col-lg-3 col-form-label">País</label>
+                                <div class="col-md-8 col-lg-9">
+                                    <select id="cboPais" class="form-select" aria-label="Default select example" onchange="CargarCboCiudad()">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="cboCiudad" class="col-md-4 col-lg-3 col-form-label">Ciudad</label>
+                                <div class="col-md-8 col-lg-9">
+                                    <select id="cboCiudad" class="form-select">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="txtDireccion" class="col-md-4 col-lg-3 col-form-label">Direccion</label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input name="txtDireccion" type="text" class="form-control" id="txtDireccion">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="txtCP" class="col-md-4 col-lg-3 col-form-label">Codigo Postal</label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input name="txtCP" type="text" class="form-control" id="txtCP">
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="button" class="btn btn-primary" onclick="abrirModal()">Guardar</button>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>
+                                                <!-- MODAL -->
+<div class="modal fade modal-sm" id="FormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Se requiere autentificación</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="txtUsuarioId"  value="0"/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="txtClave" class="form-label">Clave</label>
+                        <input type="password" class="form-control" id="txtClave" placeholder="Clave" autocomplete="off">
+                    </div>
+                </div>
+                <!--MENSAJE DE ERROR-->
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div id="mensajeError" class="alert alert-danger" role="alert">
+                            A simple danger alert—check it out!
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+
+        $(document).ready(function () {
+            CargarCboPais();
+        })
+
+
+        //ABRIR EL MODAL
+        function abrirModal() {
+            $("#mensajeError").hide();
+            $("#FormModal").modal("show");
+        }
+        //GUARDAR DATOS DE USUARIO
+        function Guardar() {
+            var usuario = {
+                UsuarioId: $("#txtUsuarioId").val(),
+                Correo: $("#txtCorreo").val(),
+                Nombre: $("#txtNombre").val(),
+                Apellido: $("#txtApellido").val(),
+                Direccion: $("#txtDireccion").val(),
+                DNI: $("#txtDNI").val(),
+                Clave:$("#txtClave").val(),
+                CodigoPostal: $("#txtCP").val(),
+                PaisId: $("#cboPais option:Selected").val(),
+                pais: {
+                    PaisId: $("#cboPais option:Selected").val(),
+                    NombrePais: $("#cboPais option:Selected").text(),
+                },
+                CiudadId: $("#cboCiudad option:Selected").val(),
+                ciudad: {
+                    CiudadId: $("#cboCiudad option:Selected").val(),
+                    NombreCiudad: $("#cboCiudad option:Selected").text(),
+                }
+            };
+            console.log(usuario);
+            debugger;
+            var request = new FormData();
+            request.append("objeto", JSON.stringify(usuario));
+            jQuery.ajax({
+                url: "@Url.Action("Guardar","Acceso")",
+                type: "POST",
+                data: request,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    $(".modal-body").LoadingOverlay("hide");
+                    if (usuario.UsuarioId == 0) {
+                        debugger;
+                        if (data.resultado != 0) {
+                            usuario.UsuarioId = data.resultado;
+                            $("#FormModal").modal("hide");
+                        } else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+                    } else {
+                        if (data.resultado != 0) {
+                            $("#FormModal").modal("hide");
+                        } else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+                    }
+                },
+                error: function (error) { },
+                beforeSend: function () {
+                    $(".modal-body").LoadingOverlay("show", {
+                        imageResizeFactory: 2,
+                        text: "Guardando...",
+                        size: 14
+                    });
+                }
+
+            });
+        }
+
+
+
+        //CARGAR COMBOS
+        function CargarCboPais() {
+            jQuery.ajax({
+                url: "@Url.Action("ListarPaises","Paises")",
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (pais) {
+                    console.log(pais);
+                    $("#cboPais").append('<option value="0">' + "Seleccionar" + '</option>');
+                    $.each(pais.data, function (index, pais) {
+                        $("#cboPais").append('<option value="' + pais.PaisId + '">' + pais.NombrePais + '</option>');
+                    });
+                }
+            });
+        }
+        function CargarCboCiudad() {
+            $("#cboCiudad").empty();
+            $("#cboCiudad").append('<option value="0"> Seleccionar </option>');
+
+            $.ajax({
+                url: '@Url.Action("ListarCiudadesPorPais","Ciudad")',
+                type: 'GET',
+                dataType: 'json',
+                data: {
+                    id: $("#cboPais").val()
+                },
+                success: function (ciudades) {
+                    console.log(ciudades);
+                    //debugger;
+                    $.each(ciudades,
+                        function(i, ciudad) {
+                            $("#cboCiudad").append('<option value="' + ciudad.CiudadId + '">' + ciudad.NombreCiudad + '</option>');
+                        });
+                    $("#cboCiudad").val($("#cboCiudad option:first").val());
+                },
+                error: function(ex) {
+                    alert('Error al intentar cargar las ciudades.' + ex);
+                }
+            });
+            return false;
+        };
+    </script>
+}

@@ -13,9 +13,12 @@ namespace Jardines2022.Servicios.Servicios.IServicios
     public class UsuarioServicio : IUsuarioServicio
     {
         private readonly IUsuarioRepositorio repositorio;
-        public UsuarioServicio(UsuarioRepositorio repositorio)
+        private readonly Jardines2022DbContext context;
+        public UsuarioServicio()
         {
-            this.repositorio = repositorio;
+            context = new Jardines2022DbContext();
+            repositorio = new UsuarioRepositorio(context);
+            //this.repositorio = repositorio;
         }
 
         public bool ExisteCorreo(string correo)
@@ -32,7 +35,14 @@ namespace Jardines2022.Servicios.Servicios.IServicios
 
         public bool ExisteUsuario(Usuario usuario)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return repositorio.ExisteUsuario(usuario);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public Usuario GetPorID(int id)

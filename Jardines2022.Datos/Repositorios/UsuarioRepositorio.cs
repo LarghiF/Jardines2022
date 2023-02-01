@@ -30,7 +30,20 @@ namespace Jardines2022.Datos.Repositorios
         }
         public bool ExisteUsuario(Usuario usuario)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (usuario.UsuarioId==0)
+                {
+                    return context.Usuarios.Any(u => u.Correo == usuario.Correo);
+                }
+                return context.Usuarios.Any(u => u.Correo == usuario.Correo
+                                            && u.Correo == usuario.Correo
+                                            && u.UsuarioId == usuario.UsuarioId);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
         public List<UsuarioListDto> GetLista()
         {
@@ -88,6 +101,8 @@ namespace Jardines2022.Datos.Repositorios
             {
                 if (usuario.UsuarioId==0)
                 {
+                    usuario.PaisId = 0;
+                    usuario.CiudadId = 0;
                     context.Usuarios.Add(usuario);
                 }
                 else
@@ -97,6 +112,15 @@ namespace Jardines2022.Datos.Repositorios
                     usuarioEnDb.Clave = usuario.Clave;
                     usuarioEnDb.Restablecer = usuario.Restablecer;
                     usuarioEnDb.RolId = usuario.RolId;
+                    usuarioEnDb.Nombre = usuario.Nombre;
+                    usuarioEnDb.Apellido = usuario.Apellido;
+                    usuarioEnDb.Direccion = usuario.Direccion;
+                    usuarioEnDb.CodigoPostal = usuario.CodigoPostal;
+                    usuarioEnDb.DNI = usuario.DNI;
+                    usuarioEnDb.Valido = usuario.Valido;
+                    usuarioEnDb.PaisId = usuario.PaisId;
+                    usuarioEnDb.CiudadId = usuario.CiudadId;
+
                     context.Entry(usuarioEnDb).State = EntityState.Modified;
                 }
                 context.SaveChanges();

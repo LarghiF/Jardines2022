@@ -20,5 +20,32 @@ namespace Jardines2022.Web.Models.Usuario
         [DisplayName("Confirmar Clave")]
         public string ConfirmarClave { get; set; }
         public bool Restablecer { get; set; }
+
+        // NUEVO INTENTO
+
+        [StringLength(50, ErrorMessage = "El campo {0} debe contener entre {2} y {1} caracteres", MinimumLength = 2)]
+        public string Nombre { get; set; }
+        [StringLength(50, ErrorMessage = "El campo {0} debe contener entre {2} y {1} caracteres", MinimumLength = 2)]
+        public string Apellido { get; set; }
+        [DisplayName("Dirección")]
+        [StringLength(100, ErrorMessage = "El campo {0} debe contener entre {2} y {1} caracteres", MinimumLength = 2)]
+        public string Direccion { get; set; }
+        [DisplayName("Codigo Postal")]
+        [StringLength(10, ErrorMessage = "El campo {0} debe contener entre {2} y {1} caracteres", MinimumLength = 2)]
+        public string CodigoPostal { get; set; }
+        [DisplayName("Documento")]
+        [StringLength(50, ErrorMessage = "El campo {0} debe contener entre {2} y {1} caracteres", MinimumLength = 2)]
+        public string DNI { get; set; }
+        [DisplayName("País")]
+        //[Required(ErrorMessage = "El campo {0} es requerido")]
+        public int PaisId { get; set; }
+        public List<Entidades.Entidades.Pais> Pais { get; set; }
+        [DisplayName("Ciudad")]
+        //[Required(ErrorMessage = "El campo {0} es requerido")]
+        public int CiudadId { get; set; }
+        public List<Entidades.Dtos.CiudadListDto> Ciudades { get; set; }
+
+
+
     }
 }

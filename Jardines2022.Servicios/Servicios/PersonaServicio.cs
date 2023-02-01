@@ -12,10 +12,11 @@ namespace Jardines2022.Servicios.Servicios
     {
         private readonly IPersonaRepositorio repositorio;
         private readonly Jardines2022DbContext context;
-        public PersonaServicio(PersonaRepositorio repositorio,Jardines2022DbContext context)
+
+        public PersonaServicio()
         {
-            this.context = context;
-            this.repositorio = repositorio;
+            context = new Jardines2022DbContext();
+            repositorio = new PersonaRepositorio(context);
         }
         public void Borrar(Persona persona)
         {

@@ -5,7 +5,9 @@ using Jardines2022.Servicios.Servicios.IServicios;
 using Jardines2022.Web.App_Start;
 using Jardines2022.Web.Helpers;
 using Jardines2022.Web.Models.Usuario;
+using Newtonsoft.Json;
 using System;
+using System.Text;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -14,12 +16,19 @@ namespace Jardines2022.Web.Controllers
     public class AccesoController : Controller
     {
         private readonly IUsuarioServicio servicio;
-        private readonly IPersonaServicio servicioPersona;
+
+        private readonly ICiudadServicio ciudadServicio;
+        private readonly IPaisesServicio paisesServicio;
+
+
         private readonly IMapper mapper;
-        public AccesoController(UsuarioServicio servicio, PersonaServicio servicioPersona)
+        public AccesoController(UsuarioServicio servicio, PaisesServicio paisesServicio, CiudadServicio ciudadServicio)
         {
             this.servicio=servicio;
-            this.servicioPersona=servicioPersona;
+
+            this.paisesServicio = paisesServicio;
+            this.ciudadServicio = ciudadServicio;
+            
             this.mapper = AutoMapperConfig.Mapper;
         }
         // GET: Acceso
@@ -52,8 +61,7 @@ namespace Jardines2022.Web.Controllers
                     }
                     else
                     {
-                        Persona p = servicioPersona.GetPorUID(usuario.UsuarioId);
-                        if (p==null)
+                        if (usuario.Valido==false)
                         {
                             FormsAuthentication.SetAuthCookie(usuario.Correo, false);
                             Session["User"] = usuario;
@@ -64,8 +72,8 @@ namespace Jardines2022.Web.Controllers
                         FormsAuthentication.SetAuthCookie(usuario.Correo, false);
                         Session["User"] = usuario;
                         Session["Correo"] = usuario.Correo;
-                        Session["Nombre"] = p.Nombre;
-                        Session["Apellido"] = p.Apellido;
+                        Session["Nombre"] = usuario.Nombre;
+                        Session["Apellido"] = usuario.Apellido;
                         ViewBag.Error = null;
                         return RedirectToAction("Index", "Home");
 
@@ -102,6 +110,7 @@ namespace Jardines2022.Web.Controllers
                 string asunto = "Registro Exitoso";
                 string mensaje = $"<h3>Se ha registrado exitosamente en Jardines Verdes<h3><br/><p>Gracias por elegirnos</p>";
                 bool respuesta = HelperCliente.EnviarCorreo(usuario.Correo, asunto, mensaje);
+                usuario.Valido = false;
                 servicio.Guardar(usuario);
                 ViewData["Correo"] = null;
                 return RedirectToAction("LogIn");
@@ -202,6 +211,91 @@ namespace Jardines2022.Web.Controllers
                 return View();
             }
         }
+        public ActionResult ConfiguracionCuenta()
+        {
+            var uCorreo = servicio.GetUsuarioPorCorreo((string)Session["Correo"]);
+            return View(uCorreo);
+        }
+        [HttpPost]
+        public JsonResult Guardar(string objeto)
+        {
+            object resultado = null;
+            string mensaje = string.Empty;
+            try
+            {
+                Usuario usuario = new Usuario();
+                usuario = JsonConvert.DeserializeObject<Usuario>(objeto);
+                var claveEncriptada = HelperCliente.Encriptar(usuario.Clave);
+                usuario.Clave = claveEncriptada;
+                mensaje = ValidarUsuario(usuario);
+                if (mensaje==String.Empty)
+                {
+                    Usuario ID = servicio.GetUsuarioPorCorreo(usuario.Correo);
+                    usuario.UsuarioId = ID.UsuarioId;
+                    usuario.Valido = true;
+                    if (servicio.ExisteUsuario(usuario))
+                    {
+                        servicio.Guardar(usuario);
+                        resultado = usuario.UsuarioId;
+                        mensaje = "Datos modificados con exito!";
+                    }
+                    else
+                    {
+                        resultado = 0;
+                        mensaje = "Error";
+                    }
+                }
+                else
+                {
+                    resultado = 0;
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = 0;
+                mensaje = e.Message;
+            }
+            RedirectToAction("Index", "Home");
+            return Json(new { resultado = resultado, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+        }
 
+        private string ValidarUsuario(Usuario usuario)
+        {
+            Usuario udb = servicio.GetUsuarioPorCorreo((string)Session["Correo"]);
+            StringBuilder sb = new StringBuilder();
+            if (string.IsNullOrEmpty(usuario.Nombre))
+            {
+                sb.AppendLine("Debe de ingresar su/s nombre/s!" + Environment.NewLine);
+            }
+            if (string.IsNullOrEmpty(usuario.Apellido))
+            {
+                sb.AppendLine("Debe de ingresar su/s apellido/s!" + Environment.NewLine);
+            }
+            if (string.IsNullOrEmpty(usuario.DNI))
+            {
+                sb.AppendLine("Debe de ingresar su número de documento!" + Environment.NewLine);
+            }
+            if (string.IsNullOrEmpty(usuario.Direccion))
+            {
+                sb.AppendLine("Debe de ingresar su dirección!" + Environment.NewLine);
+            }
+            if (string.IsNullOrEmpty(usuario.CodigoPostal))
+            {
+                sb.AppendLine("Debe de completar el codigo postal!" + Environment.NewLine);
+            }
+            if (usuario.PaisId==0)
+            {
+                sb.AppendLine("Debe de seleccionar un país!" + Environment.NewLine);
+            }
+            if (usuario.CiudadId==0)
+            {
+                sb.AppendLine("Debe de seleccionar una ciudad!" + Environment.NewLine);
+            }
+            if (usuario.Clave!=udb.Clave)
+            {
+                sb.AppendLine("Las claves no coinciden!" + Environment.NewLine);
+            }
+            return sb.ToString();
+        }
     }
 }
