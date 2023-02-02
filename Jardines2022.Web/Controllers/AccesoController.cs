@@ -255,7 +255,6 @@ namespace Jardines2022.Web.Controllers
                 resultado = 0;
                 mensaje = e.Message;
             }
-            RedirectToAction("Index", "Home");
             return Json(new { resultado = resultado, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
 
