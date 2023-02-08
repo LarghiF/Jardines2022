@@ -1,4 +1,5 @@
 ﻿using Jardines2022.Datos.Repositorios.IRepositorios;
+using Jardines2022.Entidades.Dtos;
 using Jardines2022.Entidades.Entidades;
 using System;
 using System.Collections.Generic;
@@ -154,6 +155,57 @@ namespace Jardines2022.Datos.Repositorios
 
             //    throw e;
             //}
+        }
+
+        public List<ProductoListDto> GetListaProductosPorCategorias(int id)
+        {
+            try
+            {
+                IQueryable<Producto> query = context.Productos.Where(p => p.UnidadesEnStock > 0 && p.Suspendido==false);
+                if (id>0)
+                {
+                    query = query.Where(p => p.CategoriaId == id);
+                }
+                query = query.Include(p => p.Categoria);
+                var lista = query.Select(p => new ProductoListDto()
+                {
+                    ProductoId = p.ProductoId,
+                    NombreProducto = p.NombreProducto,
+                    NombreLatin = p.NombreLatin,
+                    Categoria = p.Categoria.Descripcion,
+                    PrecioUnitario = p.PrecioUnitario,
+                    UnidadesEnStock = p.UnidadesEnStock,
+                    Suspendido = p.Suspendido,
+                    Imagen = p.Imagen
+
+                }).ToList();
+                return lista;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public void ActualizarStock(int id, int cantidad, bool suma)
+        {
+            try
+            {
+                var productoDB = context.Productos.SingleOrDefault(p => p.ProductoId == id);
+                if (suma)
+                {
+                    productoDB.UnidadesEnStock -= cantidad;
+                }
+                else
+                {
+                    productoDB.UnidadesEnStock += cantidad;
+                }
+                context.Entry(productoDB).State = EntityState.Modified;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

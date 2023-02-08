@@ -11,9 +11,11 @@ namespace Jardines2022.Web.Controllers
     public class ProductoController : Controller
     {
         private IProductoServicio servicio;
-        public ProductoController(ProductoServicio servicio)
+        private ICategoriaServicio categoriaServicio;
+        public ProductoController(ProductoServicio servicio, CategoriaServicio categoriaServicio)
         {
             this.servicio = servicio;
+            this.categoriaServicio = categoriaServicio;
         }
         // GET: Producto
         public ActionResult Index()
@@ -113,5 +115,6 @@ namespace Jardines2022.Web.Controllers
             }
             return Json(new { resultado = respuesta, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
+
     }
 }

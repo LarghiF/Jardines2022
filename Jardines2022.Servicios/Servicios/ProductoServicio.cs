@@ -1,6 +1,7 @@
 ﻿using Jardines2022.Datos;
 using Jardines2022.Datos.Repositorios;
 using Jardines2022.Datos.Repositorios.IRepositorios;
+using Jardines2022.Entidades.Dtos;
 using Jardines2022.Entidades.Entidades;
 using Jardines2022.Servicios.Servicios.IServicios;
 using System;
@@ -18,6 +19,18 @@ namespace Jardines2022.Servicios.Servicios
             this.context = context;
             this.repositorio = repositorio;
             this.unitOfWork = unitOfWork;
+        }
+
+        public void ActualizarStock(int id, int cantidad, bool suma)
+        {
+            try
+            {
+                repositorio.ActualizarStock(id, cantidad, suma);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public void Borrar(Producto producto)
@@ -65,6 +78,18 @@ namespace Jardines2022.Servicios.Servicios
             }
         }
 
+        public List<ProductoListDto> GetListaProductosPorCategorias(int id)
+        {
+            try
+            {
+                return repositorio.GetListaProductosPorCategorias(id);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public Producto GetProductoPorId(int id)
         {
             try
@@ -73,7 +98,6 @@ namespace Jardines2022.Servicios.Servicios
             }
             catch (Exception e)
             {
-
                 throw e;
             }
         }

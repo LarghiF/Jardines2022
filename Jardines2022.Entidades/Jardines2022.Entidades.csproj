@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dtos\CiudadListDto.cs" />
+    <Compile Include="Dtos\ProductoListDto.cs" />
     <Compile Include="Dtos\UsuarioListDto.cs" />
     <Compile Include="Entidades\Categoria.cs" />
     <Compile Include="Entidades\Ciudad.cs" />
