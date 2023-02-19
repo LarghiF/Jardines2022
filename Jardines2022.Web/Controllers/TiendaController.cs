@@ -3,6 +3,7 @@ using Jardines2022.Servicios.Servicios.IServicios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -32,9 +33,21 @@ namespace Jardines2022.Web.Controllers
         public JsonResult ListarProductos(int categoriaID)
         {
             var lista = servicio.GetListaProductosPorCategorias(categoriaID);
+            //foreach (var producto in lista)
+            //{
+            //    string imgRuta = producto.Imagen;
+            //    var img64 = Encoding.UTF8.GetBytes(imgRuta);
+            //    var imagenBase64 = Convert.ToBase64String(img64);
+            //    producto.Imagen = imagenBase64;
+            //}
             var jsonResultado = Json(new { data = lista }, JsonRequestBehavior.AllowGet);
             jsonResultado.MaxJsonLength = int.MaxValue;
             return jsonResultado;
         }
+
+
+
+
+
     }
 }
