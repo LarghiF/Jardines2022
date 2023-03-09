@@ -70,130 +70,130 @@
 
                 @if (Session["User"] == null)
                 {
-            <li class="nav-item dropdown pe-3">
+    <li class="nav-item dropdown pe-3">
 
-                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <img src="~/Content/assets/img/user.png" alt="Profile" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">Invitado</span>
-                </a><!-- End Profile Iamge Icon -->
+        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="~/Content/assets/img/user.png" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">Invitado</span>
+        </a><!-- End Profile Iamge Icon -->
 
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                    <li class="dropdown-header">
-                        <h6>Unirse</h6>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="@Url.Action("LogIn","Acceso")">
-                            <i class="bi bi-person"></i>
-                            <span>Ingresar</span>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="@Url.Action("Registrarse","Acceso")">
-                            <i class="bi bi-person"></i>
-                            <span>Registrarse</span>
-                        </a>
-                    </li>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+                <h6>Unirse</h6>
+            </li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li>
+                <a class="dropdown-item d-flex align-items-center" href="@Url.Action("LogIn","Acceso")">
+                    <i class="bi bi-person"></i>
+                    <span>Ingresar</span>
+                </a>
+            </li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li>
+                <a class="dropdown-item d-flex align-items-center" href="@Url.Action("Registrarse","Acceso")">
+                    <i class="bi bi-person"></i>
+                    <span>Registrarse</span>
+                </a>
+            </li>
 
-                </ul><!-- End Profile Dropdown Items -->
-            </li><!-- End Profile Nav --> }
-                        else if (Session["Nombre"] != null)
-                        {
-            <li class="nav-item dropdown pe-3">
+        </ul><!-- End Profile Dropdown Items -->
+    </li><!-- End Profile Nav --> }
+else if (Session["Nombre"] != null)
+{
+<li class="nav-item dropdown pe-3">
 
-                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <img src="" alt="" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">@Session["Nombre"], @Session["Apellido"]</span>
-                </a><!-- End Profile Iamge Icon -->
+    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+        <img src="" alt="" class="rounded-circle">
+        <span class="d-none d-md-block dropdown-toggle ps-2">@Session["Nombre"], @Session["Apellido"]</span>
+    </a><!-- End Profile Iamge Icon -->
 
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                    <li class="dropdown-header">
-                        <h6>@Session["Correo"]</h6>
-                        <span>Rol</span>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+        <li class="dropdown-header">
+            <h6>@Session["Correo"]</h6>
+            <span>Rol</span>
+        </li>
+        <li>
+            <hr class="dropdown-divider">
+        </li>
 
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                            <i class="bi bi-person"></i>
-                            <span>Cuenta</span>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+        <li>
+            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-person"></i>
+                <span>Cuenta</span>
+            </a>
+        </li>
+        <li>
+            <hr class="dropdown-divider">
+        </li>
 
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                            <i class="bi bi-gear"></i>
-                            <span>Account Settings</span>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+        <li>
+            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-gear"></i>
+                <span>Account Settings</span>
+            </a>
+        </li>
+        <li>
+            <hr class="dropdown-divider">
+        </li>
 
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                            <i class="bi bi-question-circle"></i>
-                            <span>Necesitas ayuda?</span>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+        <li>
+            <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                <i class="bi bi-question-circle"></i>
+                <span>Necesitas ayuda?</span>
+            </a>
+        </li>
+        <li>
+            <hr class="dropdown-divider">
+        </li>
 
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="@Url.Action("LogOut","Acceso")">
-                            <i class="bi bi-box-arrow-right"></i>
-                            <span>Salir</span>
-                        </a>
-                    </li>
+        <li>
+            <a class="dropdown-item d-flex align-items-center" href="@Url.Action("LogOut","Acceso")">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Salir</span>
+            </a>
+        </li>
 
-                </ul><!-- End Profile Dropdown Items -->
-            </li><!-- End Profile Nav --> }
-                        else
-                        {
-            <li class="nav-item dropdown pe-3">
+    </ul><!-- End Profile Dropdown Items -->
+</li><!-- End Profile Nav --> }
+else
+{
+<li class="nav-item dropdown pe-3">
 
-                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <img src="~/Content/assets/img/user.png" alt="Profile" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">Invitado</span>
-                </a><!-- End Profile Iamge Icon -->
+    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+        <img src="~/Content/assets/img/user.png" alt="Profile" class="rounded-circle">
+        <span class="d-none d-md-block dropdown-toggle ps-2">Invitado</span>
+    </a><!-- End Profile Iamge Icon -->
 
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                    <li class="dropdown-header">
-                        <h6>@Session["Correo"]</h6>
-                        <span>Rol</span>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="@Url.Action("ConfiguracionCuenta","Acceso")">
-                            <i class="bi bi-person"></i>
-                            <span>Completar cuenta</span>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="@Url.Action("LogOut","Acceso")">
-                            <i class="bi bi-person"></i>
-                            <span>Salir</span>
-                        </a>
-                    </li>
+    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+        <li class="dropdown-header">
+            <h6>@Session["Correo"]</h6>
+            <span>Rol</span>
+        </li>
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+        <li>
+            <a class="dropdown-item d-flex align-items-center" href="@Url.Action("ConfiguracionCuenta","Acceso")">
+                <i class="bi bi-person"></i>
+                <span>Completar cuenta</span>
+            </a>
+        </li>
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+        <li>
+            <a class="dropdown-item d-flex align-items-center" href="@Url.Action("LogOut","Acceso")">
+                <i class="bi bi-person"></i>
+                <span>Salir</span>
+            </a>
+        </li>
 
-                </ul><!-- End Profile Dropdown Items -->
-            </li><!-- End Profile Nav -->}
+    </ul><!-- End Profile Dropdown Items -->
+</li><!-- End Profile Nav -->}
 
             </ul>
         </nav><!-- End Icons Navigation -->
@@ -203,7 +203,6 @@
     <aside id="sidebar" class="sidebar">
 
         <ul class="sidebar-nav" id="sidebar-nav">
-
             <li class="nav-item">
                 <a class="nav-link " href="@Url.Action("Index","Home")">
                     <i class="bi bi-grid"></i>
@@ -211,88 +210,136 @@
                 </a>
             </li><!-- End Dashboard Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>Productos</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="@Url.Action("Index","Producto")">
-                            <i class="bi bi-circle"></i><span>Productos</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Index","Categorias")">
-                            <i class="bi bi-circle"></i><span>Categorias</span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End Productos Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-journal-text"></i><span>Ubicaciones</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="@Url.Action("Index","Paises")">
-                            <i class="bi bi-circle"></i><span>Paises</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Index","Ciudad")">
-                            <i class="bi bi-circle"></i><span>Ciudades</span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End Ubicaciones Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>Socios</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="@Url.Action("Index","Proveedores")">
-                            <i class="bi bi-circle"></i><span>Provedores</span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End Socios Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-bar-chart"></i><span>Compras</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="charts-chartjs.html">
-                            <i class="bi bi-circle"></i><span>Carrito</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="charts-apexcharts.html">
-                            <i class="bi bi-circle"></i><span>Detalle Carrito</span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End Compras Nav -->
-            <li class="nav-heading">Sobre nosotros</li>
-
-            @*<li class="nav-item">
-                    <a class="nav-link collapsed" href="pages-faq.html">
-                        <i class="bi bi-question-circle"></i>
-                        <span>Preguntas Frecuentes</span>
+            @if (Session["Correo"] != null && (int)Session["Rol"] == 1)
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-menu-button-wide"></i><span>Productos</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
-                </li>*@
-            <!-- End F.A.Q Page Nav -->
+                    <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="@Url.Action("Index", "Producto")">
+                                <i class="bi bi-circle"></i><span>Productos Tabla</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href=@Url.Action("Tienda","Tienda")>
+                                <i class="bi bi-circle"></i><span>Productos Lista</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Categorias")">
+                                <i class="bi bi-circle"></i><span>Categorias</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li><!-- End Productos Nav -->
 
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-journal-text"></i><span>Ubicaciones</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="@Url.Action("Index", "Paises")">
+                                <i class="bi bi-circle"></i><span>Paises</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Ciudad")">
+                                <i class="bi bi-circle"></i><span>Ciudades</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li><!-- End Ubicaciones Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-layout-text-window-reverse"></i><span>Socios</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="@Url.Action("Index", "Proveedores")">
+                                <i class="bi bi-circle"></i><span>Provedores</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li><!-- End Socios Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-bar-chart"></i><span>Compras</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="charts-chartjs.html">
+                                <i class="bi bi-circle"></i><span>Carrito</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="charts-apexcharts.html">
+                                <i class="bi bi-circle"></i><span>Detalle Carrito</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+            }
+            else if (Session["Correo"] != null)
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-bar-chart"></i><span>Productos</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href=@Url.Action("Tienda","Tienda")>
+                                <i class="bi bi-circle"></i><span>Productos</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-bar-chart"></i><span>Compras</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="charts-chartjs.html">
+                                <i class="bi bi-circle"></i><span>Carrito</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="charts-apexcharts.html">
+                                <i class="bi bi-circle"></i><span>Detalle Carrito</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+            }
+            else if (Session["Correo"] == null)
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-bar-chart"></i><span>Productos</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href=@Url.Action("Tienda","Tienda")>
+                                <i class="bi bi-circle"></i><span>Productos</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+
+            <li class="nav-heading">Sobre nosotros</li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="@Url.Action("Contact","Home")">
                     <i class="bi bi-envelope"></i>
                     <span>Contacto</span>
                 </a>
-            </li><!-- End Contact Page Nav -->
+            </li>
         </ul>
 
     </aside><!-- End Sidebar-->

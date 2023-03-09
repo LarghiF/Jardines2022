@@ -67,15 +67,16 @@ namespace Jardines2022.Web.Controllers
                             Session["User"] = usuario;
                             Session["Correo"] = usuario.Correo;
                             ViewBag.Error = null;
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Tienda", "Tienda");
                         }
                         FormsAuthentication.SetAuthCookie(usuario.Correo, false);
                         Session["User"] = usuario;
                         Session["Correo"] = usuario.Correo;
                         Session["Nombre"] = usuario.Nombre;
                         Session["Apellido"] = usuario.Apellido;
+                        Session["Rol"] = usuario.RolId;
                         ViewBag.Error = null;
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Tienda", "Tienda");
 
                     }
                 }
@@ -127,7 +128,7 @@ namespace Jardines2022.Web.Controllers
             FormsAuthentication.SignOut();
             Session["User"] = null;
             Session["Correo"] = null;
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Tienda", "Tienda");
         }
 
         public ActionResult RecuperarCuenta()

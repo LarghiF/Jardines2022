@@ -172,6 +172,7 @@
     <Compile Include="Models\Ciudad\CiudadListVm.cs" />
     <Compile Include="Models\Paises\PaisEditVm.cs" />
     <Compile Include="Models\Paises\PaisListVm.cs" />
+    <Compile Include="Models\Producto\ProductoDetalleVm.cs" />
     <Compile Include="Models\Usuario\UsuarioEditVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1389,6 +1390,7 @@
     <Content Include="Views\Acceso\CambiarClave.cshtml" />
     <Content Include="Views\Acceso\ConfiguracionCuenta.cshtml" />
     <Content Include="Views\Tienda\Tienda.cshtml" />
+    <Content Include="Views\Tienda\DetalleProducto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

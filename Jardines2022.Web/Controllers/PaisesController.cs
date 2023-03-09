@@ -25,8 +25,19 @@ namespace Jardines2022.Web.Controllers
         // GET: Paises
         public ActionResult Index()
         {
-            var lista = servicio.GetLista();
-            return View(lista);
+            if (Session["Correo"] != null)
+            {
+                if ((int)Session["Rol"] == 1)
+                {
+                    var lista = servicio.GetLista();
+                    return View(lista);
+                }
+                return RedirectToAction("Tienda", "Tienda");
+            }
+            else
+            {
+                return RedirectToAction("Tienda", "Tienda");
+            }
         }
         [HttpGet]
         public JsonResult ListarPaises()

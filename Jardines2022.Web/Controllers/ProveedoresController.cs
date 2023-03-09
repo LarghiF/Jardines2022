@@ -21,7 +21,18 @@ namespace Jardines2022.Web.Controllers
         // GET: Proveedores
         public ActionResult Index()
         {
-            return View();
+            if (Session["Correo"] != null)
+            {
+                if ((int)Session["Rol"] == 1)
+                {
+                    return View();
+                }
+                return RedirectToAction("Tienda", "Tienda");
+            }
+            else
+            {
+                return RedirectToAction("Tienda", "Tienda");
+            }
         }
         [HttpGet]
         public JsonResult ListarProveedores()

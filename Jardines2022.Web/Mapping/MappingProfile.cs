@@ -4,6 +4,7 @@ using Jardines2022.Entidades.Entidades;
 using Jardines2022.Web.Models.Categorias;
 using Jardines2022.Web.Models.Ciudad;
 using Jardines2022.Web.Models.Paises;
+using Jardines2022.Web.Models.Producto;
 using Jardines2022.Web.Models.Usuario;
 using System;
 
@@ -17,8 +18,14 @@ namespace Jardines2022.Web.Mapping
             LoadCategoriaMapping();
             LoadCiudadMapping();
             LoadUsuarioMapping();
+            LoadProductoMapping();
         }
 
+        private void LoadProductoMapping()
+        {
+            CreateMap<Producto, ProductoListDto>();
+            CreateMap<ProductoListDto, ProductoDetalleVm>();
+        }
 
         private void LoadUsuarioMapping()
         {

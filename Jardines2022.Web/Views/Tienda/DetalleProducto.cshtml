@@ -1,0 +1,32 @@
+﻿@model      Jardines2022.Web.Models.Producto.ProductoDetalleVm
+@{ 
+    ViewBag.Title = "DetalleProduco";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="main" id="main">
+    <div class="card px-4 px-lg-5 my-5">
+        <div class="row mt-3 mb-3 gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="data:image/jpeg;base64, @Html.DisplayTextFor(m=>m.Imagen)" alt="..." /></div>            
+            <div class="col-md-6">
+                <div class="small mb-1">@Html.DisplayTextFor(m => m.Categoria)</div>
+                <h1 class="display-5 fw-bolder">@Html.DisplayTextFor(m => m.NombreProducto)</h1>
+                <div class="fs-5 mb-5">
+                    <span>$@Html.DisplayTextFor(m => m.PrecioUnitario)</span>
+                </div>
+                <p class="lead">Stock @Html.DisplayTextFor(m => m.UnidadesEnStock)</p>
+                <div class="d-flex">
+                    <a href="@Url.Action("Tienda", "Tienda")" class="btn btn-success w-50 mx-2">
+                        <i class="fas fa-undo-alt"></i>Volver
+                    </a>
+                    @if (Session["Correo"] != null)
+                    {
+
+        <button class="btn btn-primary flex-shrink-0 w-50 agregarCarrito" id="agregarCarrito" type="button" data-productoId="@Html.DisplayTextFor(m => m.ProductoId)">
+            <i class="fas fa-cart-plus"></i>
+            Agregar al Carrito
+        </button>}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

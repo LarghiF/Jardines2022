@@ -24,14 +24,24 @@ namespace Jardines2022.Web.Controllers
             mapper = AutoMapperConfig.Mapper;
         }
         // GET: Ciudad
-        public ActionResult Index(int? pageSize,
-            int? page)
+        public ActionResult Index(int? pageSize,int? page)
         {
-            page = (page ?? 1);
-            ViewBag.CurrentItemsPerPage = pageSize ?? 10; // default 10
-            var lista = servicio.GetLista();
-            //var listaVm = mapper.Map<List<CiudadListVm>>(lista);
-            return View(lista.ToPagedList((int)page, pageSize ?? 10));
+            if (Session["Correo"] != null)
+            {
+                if ((int)Session["Rol"] == 1)
+                {
+                    page = (page ?? 1);
+                    ViewBag.CurrentItemsPerPage = pageSize ?? 10;
+                    var lista = servicio.GetLista();
+                    //var listaVm = mapper.Map<List<CiudadListVm>>(lista);
+                    return View(lista.ToPagedList((int)page, pageSize ?? 10));
+                }
+                return RedirectToAction("Tienda", "Tienda");
+            }
+            else
+            {
+                return RedirectToAction("Tienda", "Tienda");
+            }
 
         }
         [HttpGet]
