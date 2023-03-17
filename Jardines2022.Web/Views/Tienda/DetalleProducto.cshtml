@@ -1,6 +1,6 @@
 ﻿@model      Jardines2022.Web.Models.Producto.ProductoDetalleVm
 @{ 
-    ViewBag.Title = "DetalleProduco";
+    ViewBag.Title = "Detalle";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <section class="main" id="main">
@@ -15,16 +15,27 @@
                 </div>
                 <p class="lead">Stock @Html.DisplayTextFor(m => m.UnidadesEnStock)</p>
                 <div class="d-flex">
-                    <a href="@Url.Action("Tienda", "Tienda")" class="btn btn-success w-50 mx-2">
-                        <i class="fas fa-undo-alt"></i>Volver
+                    <a href="@Url.Action("Tienda", "Tienda")" class="btn btn-success w-25 mx-2">
+                        Volver
                     </a>
                     @if (Session["Correo"] != null)
                     {
+                        using (Html.BeginForm("AgregarMultiple", "Carrito", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
 
-        <button class="btn btn-primary flex-shrink-0 w-50 agregarCarrito" id="agregarCarrito" type="button" data-productoId="@Html.DisplayTextFor(m => m.ProductoId)">
-            <i class="fas fa-cart-plus"></i>
-            Agregar al Carrito
-        </button>}
+                            <div style="float:right">
+                                @Html.Hidden("productoId", Model.ProductoId)
+                                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                                <input class="form-control text-center" id="Cantidad" name="Cantidad" type="number" value="1" />
+                                <input type="submit" class="btn btn-success" value="Agregar" />
+                            </div>
+                        }
+                        @*<button class="btn btn-primary flex-shrink-0 w-50 agregarCarrito" id="agregarCarrito" type="button" data-productoId="@Html.DisplayTextFor(m => m.ProductoId)">
+                            <i class="fas fa-cart-plus"></i>
+                            Agregar al Carrito
+                        </button>*@
+                    }
                 </div>
             </div>
         </div>

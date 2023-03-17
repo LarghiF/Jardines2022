@@ -153,6 +153,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccesoController.cs" />
+    <Compile Include="Controllers\CarritoController.cs" />
     <Compile Include="Controllers\CategoriasController.cs" />
     <Compile Include="Controllers\CiudadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -165,7 +166,9 @@
     </Compile>
     <Compile Include="Helpers\DefaultValues.cs" />
     <Compile Include="Helpers\HelperCliente.cs" />
+    <Compile Include="Helpers\HelperImagenes.cs" />
     <Compile Include="Mapping\MappingProfile.cs" />
+    <Compile Include="Models\Carrito\CarritoListVm.cs" />
     <Compile Include="Models\Categorias\CategoriaEditVm.cs" />
     <Compile Include="Models\Categorias\CategoriaListVm.cs" />
     <Compile Include="Models\Ciudad\CiudadEditVm.cs" />
@@ -180,28 +183,6 @@
     <Content Include="Content\all.css" />
     <Content Include="Content\all.min.css" />
     <Content Include="Content\assets\css\style.css" />
-    <Content Include="Content\assets\img\apple-touch-icon.png" />
-    <Content Include="Content\assets\img\card.jpg" />
-    <Content Include="Content\assets\img\favicon.png" />
-    <Content Include="Content\assets\img\logo.png" />
-    <Content Include="Content\assets\img\messages-1.jpg" />
-    <Content Include="Content\assets\img\messages-2.jpg" />
-    <Content Include="Content\assets\img\messages-3.jpg" />
-    <Content Include="Content\assets\img\news-1.jpg" />
-    <Content Include="Content\assets\img\news-2.jpg" />
-    <Content Include="Content\assets\img\news-3.jpg" />
-    <Content Include="Content\assets\img\news-4.jpg" />
-    <Content Include="Content\assets\img\news-5.jpg" />
-    <Content Include="Content\assets\img\not-found.svg" />
-    <Content Include="Content\assets\img\product-1.jpg" />
-    <Content Include="Content\assets\img\product-2.jpg" />
-    <Content Include="Content\assets\img\product-3.jpg" />
-    <Content Include="Content\assets\img\product-4.jpg" />
-    <Content Include="Content\assets\img\product-5.jpg" />
-    <Content Include="Content\assets\img\profile-img.jpg" />
-    <Content Include="Content\assets\img\slides-1.jpg" />
-    <Content Include="Content\assets\img\slides-2.jpg" />
-    <Content Include="Content\assets\img\slides-3.jpg" />
     <Content Include="Content\assets\js\main.js" />
     <Content Include="Content\assets\scss\Readme.txt" />
     <Content Include="Content\assets\vendor\apexcharts\apexcharts.min.js" />
@@ -1391,10 +1372,13 @@
     <Content Include="Views\Acceso\ConfiguracionCuenta.cshtml" />
     <Content Include="Views\Tienda\Tienda.cshtml" />
     <Content Include="Views\Tienda\DetalleProducto.cshtml" />
+    <Content Include="Views\Carrito\Carrito.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Shop\" />
+    <Folder Include="Content\assets\img\Muestra\" />
+    <Folder Include="Content\assets\img\Productos\" />
+    <Folder Include="Content\assets\img\Usuarios\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />

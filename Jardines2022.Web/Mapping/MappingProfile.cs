@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Jardines2022.Entidades.Dtos;
 using Jardines2022.Entidades.Entidades;
+using Jardines2022.Web.Models.Carrito;
 using Jardines2022.Web.Models.Categorias;
 using Jardines2022.Web.Models.Ciudad;
 using Jardines2022.Web.Models.Paises;
@@ -19,6 +20,13 @@ namespace Jardines2022.Web.Mapping
             LoadCiudadMapping();
             LoadUsuarioMapping();
             LoadProductoMapping();
+            LoadCarritoMapping();
+        }
+
+        private void LoadCarritoMapping()
+        {
+            CreateMap<Carrito, CarritoListVm>().ForMember(dest => dest.Producto, opt => opt.MapFrom(src => src.Producto.NombreProducto))
+                .ForMember(dest => dest.Precio, opt => opt.MapFrom(src => src.Producto.PrecioUnitario));
         }
 
         private void LoadProductoMapping()

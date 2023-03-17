@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Jardines2022.Web.Helpers;
 
 namespace Jardines2022.Web.Controllers
 {
@@ -41,30 +42,32 @@ namespace Jardines2022.Web.Controllers
             var lista = servicio.GetListaProductosPorCategorias(categoriaID);
             foreach (var producto in lista)
             {
-                producto.Imagen = Conversor(producto.Imagen);
+                producto.Imagen = Helpers.HelperImagenes.Conversor(producto.Imagen);
             }
             var jsonResultado = Json(new { data = lista }, JsonRequestBehavior.AllowGet);
             jsonResultado.MaxJsonLength = int.MaxValue;
             return jsonResultado;
         }
-        private static string Conversor(string ruta)
-        {
-            if (ruta==null)
-            {
-                ruta = "C:/Proyectos/Jardines2022FedericoL-master/Jardines2022.Web/Content/assets/img/Imagen_no_disponible.png";
-            }
-            byte[] imgArray = System.IO.File.ReadAllBytes(ruta);
-            string base64Imagen = Convert.ToBase64String(imgArray);
-            return base64Imagen;
-        }
+        //private static string Conversor(string ruta)
+        //{
+        //    if (ruta==null)
+        //    {
+        //        ruta = "C:/Proyectos/Jardines2022FedericoL-master/Jardines2022.Web/Content/assets/img/Muestra/Imagen_no_disponible.png"; 
+        //    }
+        //    byte[] imgArray = System.IO.File.ReadAllBytes(ruta);
+        //    string base64Imagen = Convert.ToBase64String(imgArray);
+        //    return base64Imagen;
+        //}
 
         [HttpGet]
         public ActionResult DetalleProducto(int productoID)
         {
             ProductoListDto p = mapper.Map<ProductoListDto>(servicio.GetProductoPorId(productoID));
             ProductoDetalleVm productoDetalleVm = mapper.Map<ProductoDetalleVm>(p);
-            productoDetalleVm.Imagen = Conversor(productoDetalleVm.Imagen);
+            productoDetalleVm.Imagen = Helpers.HelperImagenes.Conversor(productoDetalleVm.Imagen);
             return View(productoDetalleVm);
         }
+
+
     }
 }

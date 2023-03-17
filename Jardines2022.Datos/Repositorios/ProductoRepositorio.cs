@@ -187,20 +187,27 @@ namespace Jardines2022.Datos.Repositorios
             }
         }
 
-        public void ActualizarStock(int id, int cantidad, bool suma)
+        public void ActualizarStock(int id, int cantidad,string signo)
         {
             try
             {
                 var productoDB = context.Productos.SingleOrDefault(p => p.ProductoId == id);
-                if (suma)
+                //productoDB.UnidadesEnStock -= cantidad;
+                //productoDB.UnidadesEnStock += cantidad;
+                if (signo=="+")
+                {
+                    productoDB.UnidadesEnStock += cantidad;
+                }
+                else if (signo=="-")
                 {
                     productoDB.UnidadesEnStock -= cantidad;
                 }
                 else
                 {
-                    productoDB.UnidadesEnStock += cantidad;
+                    throw new Exception("Signo mal ingresado!");
                 }
                 context.Entry(productoDB).State = EntityState.Modified;
+                context.SaveChanges();
             }
             catch (Exception e)
             {

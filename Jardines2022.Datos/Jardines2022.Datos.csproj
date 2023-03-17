@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityTypeConfiguration\CarritoEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfiguration\CiudadEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfiguration\PaisesEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfiguration\ProductosEntityTypeConfiguration.cs" />
@@ -59,18 +60,18 @@
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Jardines2022DbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\CarritoRepositorio.cs" />
     <Compile Include="Repositorios\CategoriaRepositorio.cs" />
     <Compile Include="Repositorios\CiudadRepositorio.cs" />
+    <Compile Include="Repositorios\IRepositorios\ICarritoRepositorio.cs" />
     <Compile Include="Repositorios\IRepositorios\ICategoriaRepositorio.cs" />
     <Compile Include="Repositorios\IRepositorios\ICiudadRepositorio.cs" />
     <Compile Include="Repositorios\IRepositorios\IPaisesRepositorio.cs" />
-    <Compile Include="Repositorios\IRepositorios\IPersonaRepositorio.cs" />
     <Compile Include="Repositorios\IRepositorios\IProductoRepositorio.cs" />
     <Compile Include="Repositorios\IRepositorios\IProveedorRepositorio.cs" />
     <Compile Include="Repositorios\IRepositorios\IRolRepositorio.cs" />
     <Compile Include="Repositorios\IRepositorios\IUsuarioRepositorio.cs" />
     <Compile Include="Repositorios\PaisesRepositorio.cs" />
-    <Compile Include="Repositorios\PersonaRepositorio.cs" />
     <Compile Include="Repositorios\ProductoRepositorio.cs" />
     <Compile Include="Repositorios\ProveedorRepositorio.cs" />
     <Compile Include="Repositorios\UsuarioRepositorio.cs" />

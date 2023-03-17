@@ -58,6 +58,7 @@
 {
     <script>
 
+
         $(document).ready(function () {
             mostrarCategorias();
             MostrarProductos(0);
@@ -86,13 +87,28 @@
             debugger;
             MostrarProductos(categoriaSeleccionadaId);
         });
-
-        $(document).on("click",
-            "button.agregarCarrito",
-            function () {
-                console.log($(this).data('productoid'));
-                debugger;
+        //AGREGAR AL CARRITO
+        $(document).on("click", "button.AgregarAlCarrito", function () {
+            //var productoId = $(this).data('productoid');
+            //console.log(productoId);
+            //debugger;
+            $.ajax({
+                url: "@Url.Action("AgregarJson", "Carrito")",
+                type: "POST",
+                data: JSON.stringify({ value: $(this).data('productoid') }),
+                success: function (data) {
+                    if (data.resultado) {
+                        alert("Agregado al Carrito!");
+                    } else {
+                        alert(data.mensaje);
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                }
             });
+        });
+
 
         function MostrarProductos(CategoriaSeleccionadaId) {
             jQuery.ajax({
@@ -128,9 +144,9 @@
                                                     ),
                                                     $("<div>").addClass("col-auto").append(
                                                         @if (Session["Correo"]!=null)
-                                                        {
-                                                            @:$("<button>").addClass("btn btn-success mt-auto agregarCarrito").data("productoid", elemento.ProductoId).text("Agregar a Carrito"),
-
+{
+                                                            //@:$("<a>").addClass("btn btn-success").attr({ "href": "@Url.Action("Agregar","Carrito")" + "?productoId=" + elemento.ProductoId }).text("Agregar al Carrito"),
+                                                            @:$("<button>").addClass("btn btn-success mt-auto AgregarAlCarrito").data("productoid", elemento.ProductoId).text("Agregar a Carrito"),
                                                         }
                                                     )
                                                 )

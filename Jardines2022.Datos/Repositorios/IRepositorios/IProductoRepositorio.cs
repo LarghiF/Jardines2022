@@ -12,7 +12,7 @@ namespace Jardines2022.Datos.Repositorios.IRepositorios
     {
         List<Producto> GetLista();
         List<ProductoListDto> GetListaProductosPorCategorias(int id);
-        void ActualizarStock(int id, int cantidad, bool suma);
+        void ActualizarStock(int id, int cantidad, string signo);
         Producto GetProductoPorId(int id);
         void Guardar(Producto producto);
         void Borrar(Producto producto);

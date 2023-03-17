@@ -21,11 +21,11 @@ namespace Jardines2022.Servicios.Servicios
             this.unitOfWork = unitOfWork;
         }
 
-        public void ActualizarStock(int id, int cantidad, bool suma)
+        public void ActualizarStock(int id, int cantidad, string signo)
         {
             try
             {
-                repositorio.ActualizarStock(id, cantidad, suma);
+                repositorio.ActualizarStock(id, cantidad,signo);
             }
             catch (Exception e)
             {
