@@ -126,5 +126,25 @@ namespace Jardines2022.Servicios.Servicios
                 throw e;
             }
         }
+        public void VaciarCarritoCompraFinalizada(int usuarioId)
+        {
+            try
+            {
+                using (var transaction = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    var carrito = repositorio.ListaCarrito(usuarioId);
+                    foreach (var items in carrito)
+                    {
+                        repositorio.Quitar(usuarioId, items.ProductoId);
+                        unitOfWork.Save();
+                    }
+                    transaction.Complete();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

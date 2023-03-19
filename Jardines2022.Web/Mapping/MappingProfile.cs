@@ -7,6 +7,7 @@ using Jardines2022.Web.Models.Ciudad;
 using Jardines2022.Web.Models.Paises;
 using Jardines2022.Web.Models.Producto;
 using Jardines2022.Web.Models.Usuario;
+using Jardines2022.Web.Models.Venta;
 using System;
 
 namespace Jardines2022.Web.Mapping
@@ -21,6 +22,13 @@ namespace Jardines2022.Web.Mapping
             LoadUsuarioMapping();
             LoadProductoMapping();
             LoadCarritoMapping();
+            LoadVentaMapping();
+        }
+
+        private void LoadVentaMapping()
+        {
+            CreateMap<Venta, VentaVm>().ReverseMap();
+            CreateMap<DetalleVenta, DetalleVentaVm>().ReverseMap();
         }
 
         private void LoadCarritoMapping()

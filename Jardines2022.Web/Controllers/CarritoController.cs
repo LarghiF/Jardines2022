@@ -4,6 +4,7 @@ using Jardines2022.Servicios.Servicios;
 using Jardines2022.Servicios.Servicios.IServicios;
 using Jardines2022.Web.App_Start;
 using Jardines2022.Web.Models.Carrito;
+using Jardines2022.Web.Models.Venta;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,12 @@ namespace Jardines2022.Web.Controllers
     public class CarritoController : Controller
     {
         private readonly ICarritoServicio servicio;
+        private readonly IVentaServicio ventaServicio;
         private readonly IMapper mapper;
-        public CarritoController(CarritoServicio servicio)
+        public CarritoController(CarritoServicio servicio, VentaServicio ventaServicio)
         {
             this.servicio = servicio;
+            this.ventaServicio = ventaServicio;
             mapper = AutoMapperConfig.Mapper;
         }
         // GET: Carrito
@@ -118,6 +121,55 @@ namespace Jardines2022.Web.Controllers
                 msj = e.Message;
             }
             return Json(new { resultado = rta, mensaje = msj }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult CompletarCompra()
+        {
+            var usuarioId = ((Usuario)Session["User"]).UsuarioId;
+            if (servicio.ListaCarrito(usuarioId)!=null)
+            {
+                try
+                {
+                    var listaCompra = servicio.ListaCarrito(usuarioId);
+                    decimal PrecioTotal = 0;
+                    foreach (var item in listaCompra)
+                    {
+                        PrecioTotal = (item.Cantidad * item.Producto.PrecioUnitario)+PrecioTotal;
+                    }
+                    VentaVm ventaVm = new VentaVm()
+                    {
+                        Fecha = DateTime.Now,
+                        UsuarioId = usuarioId,
+                        Total = PrecioTotal
+                    };
+                    var venta = mapper.Map<Venta>(ventaVm);
+                    ventaServicio.AgregarVenta(venta);
+                    if (venta.VentaId!=0)
+                    {
+                        foreach (var item in listaCompra)
+                        {
+                            DetalleVentaVm detalleVentaVm = new DetalleVentaVm()
+                            {
+                                VentaId = venta.VentaId,
+                                ProductoId = item.ProductoId,
+                                Cantidad = item.Cantidad,
+                                Precio = item.Producto.PrecioUnitario
+                            };
+                            var detalle = mapper.Map<DetalleVenta>(detalleVentaVm);
+                            ventaServicio.AgregarDetalleVenta(detalle);
+                        }
+                        servicio.VaciarCarritoCompraFinalizada(usuarioId);
+                    }
+                    return RedirectToAction("Tienda", "Tienda");
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
+            }
+            else
+            {
+                return RedirectToAction("Carrito");
+            }
         }
     }
 }

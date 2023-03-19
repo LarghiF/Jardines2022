@@ -51,8 +51,9 @@
             @if (Model.Any())
             {
                 <div>
-                    @Html.ActionLink("Comprar", "FinalizarCompra", null, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Comprar", "CompletarCompra", null, new { @class = "btn btn-success" })
                     @Html.ActionLink("Cancelar", "CancelarCompra", null, new { @class = "btn btn-warning" })
+                    <a class="btn btn-primary" href="@Url.Action("Tienda","Tienda")"><span>Seguir Comprando</span></a>
                 </div>
             }
         </div>

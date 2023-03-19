@@ -177,6 +177,8 @@
     <Compile Include="Models\Paises\PaisListVm.cs" />
     <Compile Include="Models\Producto\ProductoDetalleVm.cs" />
     <Compile Include="Models\Usuario\UsuarioEditVm.cs" />
+    <Compile Include="Models\Venta\DetalleVentaVm.cs" />
+    <Compile Include="Models\Venta\VentaVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

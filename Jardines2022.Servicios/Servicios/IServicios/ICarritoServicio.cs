@@ -15,5 +15,6 @@ namespace Jardines2022.Servicios.Servicios.IServicios
         List<Carrito> ListaCarrito(int usuarioId);
         Carrito GetCarrito(int usuarioId, int productoId);
         void QuitarTodo(int usuarioId);
+        void VaciarCarritoCompraFinalizada(int usuarioId);
     }
 }

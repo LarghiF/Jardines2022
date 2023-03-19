@@ -53,10 +53,12 @@
     <Compile Include="Servicios\IServicios\IProductoServicio.cs" />
     <Compile Include="Servicios\IServicios\IProveedorServicio.cs" />
     <Compile Include="Servicios\IServicios\IUsuarioServicio.cs" />
+    <Compile Include="Servicios\IServicios\IVentaServicio.cs" />
     <Compile Include="Servicios\PaisesServicio.cs" />
     <Compile Include="Servicios\ProductoServicio.cs" />
     <Compile Include="Servicios\ProveedorServicio.cs" />
     <Compile Include="Servicios\UsuarioServicio.cs" />
+    <Compile Include="Servicios\VentaServicio.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

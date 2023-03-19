@@ -31,6 +31,8 @@ namespace Jardines2022.Datos
         public DbSet<Proveedor> Proveedores { get; set; }
         public DbSet<Carrito> Carritos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Venta> Ventas { get; set; }
+        public DbSet<DetalleVenta> detalleVentas { get; set; }
 
     }
 }

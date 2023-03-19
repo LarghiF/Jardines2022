@@ -88,14 +88,13 @@
             MostrarProductos(categoriaSeleccionadaId);
         });
         //AGREGAR AL CARRITO
-        $(document).on("click", "button.AgregarAlCarrito", function () {
-            //var productoId = $(this).data('productoid');
-            //console.log(productoId);
-            //debugger;
+        $(document).on("click", "button.AgregarAlCarrito", function (jsonProducto) {
+            var ID = $(this).data('productoid');
+            console.log(ID);
+            debugger;
             $.ajax({
                 url: "@Url.Action("AgregarJson", "Carrito")",
                 type: "POST",
-                data: JSON.stringify({ value: $(this).data('productoid') }),
                 success: function (data) {
                     if (data.resultado) {
                         alert("Agregado al Carrito!");
@@ -109,6 +108,25 @@
             });
         });
 
+        @*function Agregar(productoId) {
+            jQuery.ajax({
+                url: "@Url.Action("AgregarJson", "Carrito")",
+                type: "POST",
+                dataType:"json",
+                data: JSON.stringify({ value: productoId }),
+                contentType: "application/json; chartset=utf-8",
+                success: function (data) {
+                    if (data.resultado) {
+                        alert("Agregado al Carrito!");
+                    } else {
+                        alert(data.mensaje);
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        }*@
 
         function MostrarProductos(CategoriaSeleccionadaId) {
             jQuery.ajax({

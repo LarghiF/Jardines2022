@@ -53,10 +53,12 @@
   <ItemGroup>
     <Compile Include="EntityTypeConfiguration\CarritoEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfiguration\CiudadEntityTypeConfiguration.cs" />
+    <Compile Include="EntityTypeConfiguration\DetalleVentaEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfiguration\PaisesEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfiguration\ProductosEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfiguration\ProveedoresEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfiguration\UsuarioEntityTypeConfiguration.cs" />
+    <Compile Include="EntityTypeConfiguration\VentaEntityTypeConfiguration.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Jardines2022DbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,10 +73,12 @@
     <Compile Include="Repositorios\IRepositorios\IProveedorRepositorio.cs" />
     <Compile Include="Repositorios\IRepositorios\IRolRepositorio.cs" />
     <Compile Include="Repositorios\IRepositorios\IUsuarioRepositorio.cs" />
+    <Compile Include="Repositorios\IRepositorios\IVentaRepositorio.cs" />
     <Compile Include="Repositorios\PaisesRepositorio.cs" />
     <Compile Include="Repositorios\ProductoRepositorio.cs" />
     <Compile Include="Repositorios\ProveedorRepositorio.cs" />
     <Compile Include="Repositorios\UsuarioRepositorio.cs" />
+    <Compile Include="Repositorios\VentaRepositorio.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
