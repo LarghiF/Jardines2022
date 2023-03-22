@@ -11,6 +11,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Jardines2022.Web.Helpers;
+using Jardines2022.Entidades.Entidades;
 
 namespace Jardines2022.Web.Controllers
 {
@@ -28,7 +29,21 @@ namespace Jardines2022.Web.Controllers
         // GET: Tienda
         public ActionResult Tienda()
         {
-            return View();
+            if (Session["Correo"]!=null)
+            {
+                if (((Usuario)Session["User"]).RolId==(Rol)1)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            else
+            {
+                return View();
+            }
         }
         [HttpGet]
         public JsonResult ListarCategorias()
