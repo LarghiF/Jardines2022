@@ -17,12 +17,14 @@ namespace Jardines2022.Web.Controllers
     {
         private readonly ICarritoServicio servicio;
         private readonly IVentaServicio ventaServicio;
+        private readonly IProductoServicio productoServicio;
         private readonly IMapper mapper;
-        public CarritoController(CarritoServicio servicio, VentaServicio ventaServicio)
+        public CarritoController(CarritoServicio servicio, VentaServicio ventaServicio, ProductoServicio productoServicio)
         {
             this.servicio = servicio;
             this.ventaServicio = ventaServicio;
             mapper = AutoMapperConfig.Mapper;
+            this.productoServicio = productoServicio;
         }
         // GET: Carrito
         public ActionResult Carrito()
@@ -61,17 +63,32 @@ namespace Jardines2022.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AgregarMultiple(int productoId,int cantidad)
         {
-            var usuarioId = ((Usuario)Session["User"]).UsuarioId;
             try
             {
-                servicio.AgregarAlCarrito(usuarioId, productoId, cantidad);
-                TempData["msg"] = "Producto Agregado";
-                return RedirectToAction("Carrito");
+                Producto producto = productoServicio.GetProductoPorId(productoId);
+                if (cantidad<=0 || cantidad>producto.UnidadesEnStock)
+                {
+                    throw new Exception("La cantidad de productos seleccionados esta mal!");
+                }
+                else
+                {
+                    var usuarioId = ((Usuario)Session["User"]).UsuarioId;
+                    try
+                    {
+                        servicio.AgregarAlCarrito(usuarioId, productoId, cantidad);
+                        TempData["msg"] = "Producto Agregado";
+                        return RedirectToAction("Carrito");
+                    }
+                    catch (Exception e)
+                    {
+                        TempData["msg"] = e.Message;
+                        return RedirectToAction("Carrito");
+                    }
+                }
             }
             catch (Exception e)
             {
-                TempData["msg"] = e.Message;
-                return RedirectToAction("Carrito");
+                throw new Exception(e.Message);
             }
         }
         public ActionResult QuitarDelCarrito(int productoId)

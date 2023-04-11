@@ -173,6 +173,7 @@
     <Compile Include="Models\Categorias\CategoriaListVm.cs" />
     <Compile Include="Models\Ciudad\CiudadEditVm.cs" />
     <Compile Include="Models\Ciudad\CiudadListVm.cs" />
+    <Compile Include="Models\Paginacion\Paginacion.cs" />
     <Compile Include="Models\Paises\PaisEditVm.cs" />
     <Compile Include="Models\Paises\PaisListVm.cs" />
     <Compile Include="Models\Producto\ProductoDetalleVm.cs" />

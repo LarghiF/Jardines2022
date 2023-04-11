@@ -7,17 +7,17 @@
 
                     <div class="row g-0">
                         <div class="col-auto">
-                            <label for="nroProductos" class="col-form-label">Mostrar: </label>
+                            <label for="nroDeProductos" class="col-form-label">Mostrar: </label>
                         </div>
                         <div class="col-auto">
-                            <select name="nroProductos" id="nroProductos" class="form-select">
+                            <select name="nroDeProductos" id="nroDeProductos" class="form-select">
                                 <option value="10">10</option>
                                 <option value="25">25</option>
                                 <option value="50">50</option>
                             </select>
                         </div>
                         <div class="col-auto">
-                            <label for="nroProductos" class="col-form-label"> productos</label>
+                            <label for="nroDeProductos" class="col-form-label"> productos</label>
                         </div>
                         <div class="col-4"></div>
                         <div class="col-auto">
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="row">
-            <div id="mostrarProducto" class="col-lg-12">
+            <div id="ContenedorDeProductos" class="col-lg-12">
                 <div class="card mb-3">
                     <div class="row g-0">
                         <div class="col-md-4">
@@ -52,16 +52,42 @@
                 </div>
             </div>
         </div>
+        <!--PAGINACIÓN-->
+        <div class="row">
+            <button id="btnSiguiente">Siguiente</button>
+            <button id="btnAnterior">Anterior</button>
+        </div>
     </section>
 </main>
 @section scripts
 {
     <script>
 
-
+        var controladorPagina;
         $(document).ready(function () {
-            mostrarCategorias();
-            MostrarProductos(0);
+            // CARGAR METODOS
+            controladorPagina = 1;
+            mostrarCategorias()
+            MostrarProductos(0, 10, controladorPagina);
+        });
+        //NAVEGAR POR LAS PAGINAS
+        $("#btnSiguiente").click(function (jsonSiguiente) {
+            var porPag = document.getElementById("nroDeProductos").value;
+            controladorPagina = controladorPagina + 1;
+            var select = document.getElementById("cboCategoria");
+            var categoriaSeleccionadaId = select.options[select.selectedIndex].value;
+            console.log(controladorPagina);
+            MostrarProductos(categoriaSeleccionadaId, porPag, controladorPagina);
+        });
+        $("#btnAnterior").click(function (jsonAnterior) {
+            var porPag = document.getElementById("nroDeProductos").value;
+            if (controladorPagina > 1) {
+                controladorPagina = controladorPagina - 1;
+                var select = document.getElementById("cboCategoria");
+                var categoriaSeleccionadaId = select.options[select.selectedIndex].value;
+                console.log(controladorPagina);
+                MostrarProductos(categoriaSeleccionadaId, porPag, controladorPagina);
+            } 
         });
         //Cargar cboCategorias
         function mostrarCategorias() {
@@ -79,13 +105,16 @@
                 }
             });
         }
-
+        // APLICAR FILTROS
         $("#btnAplicarFiltros").click(function (jsonCategoria) {
             var select = document.getElementById("cboCategoria");
             var categoriaSeleccionadaId = select.options[select.selectedIndex].value;
             console.log(categoriaSeleccionadaId);
             debugger;
-            MostrarProductos(categoriaSeleccionadaId);
+            var porPag = document.getElementById("nroDeProductos").value;
+            console.log(porPag);
+            debugger;
+            MostrarProductos(categoriaSeleccionadaId,porPag,1);
         });
         //AGREGAR AL CARRITO
         $(document).on("click", "button.AgregarAlCarrito", function () {
@@ -95,6 +124,9 @@
             $.ajax({
                 url: "@Url.Action("AgregarJson", "Carrito")",
                 type: "POST",
+                dataType: "json",
+                data: JSON.stringify({ ProductoId: ID }),
+                contentType: "application/json; chartset=utf-8",
                 success: function (data) {
                     if (data.resultado) {
                         alert("Agregado al Carrito!");
@@ -107,43 +139,23 @@
                 }
             });
         });
-
-        @*function Agregar(productoId) {
-            jQuery.ajax({
-                url: "@Url.Action("AgregarJson", "Carrito")",
-                type: "POST",
-                dataType:"json",
-                data: JSON.stringify({ value: productoId }),
-                contentType: "application/json; chartset=utf-8",
-                success: function (data) {
-                    if (data.resultado) {
-                        alert("Agregado al Carrito!");
-                    } else {
-                        alert(data.mensaje);
-                    }
-                },
-                error: function (e) {
-                    console.log(e);
-                }
-            });
-        }*@
-
-        function MostrarProductos(CategoriaSeleccionadaId) {
+        // MOSTRAR LOS PRODUCTOS
+         function MostrarProductos(CategoriaSeleccionadaId,CantidadDeProductos,PaginaActual) {
             jQuery.ajax({
                 url: "@Url.Action("ListarProductos","Tienda")",
                 type: "POST",
                 dataType: "json",
-                data: JSON.stringify({ CategoriaId: CategoriaSeleccionadaId }),
+                data: JSON.stringify({ CategoriaId: CategoriaSeleccionadaId,porPag:CantidadDeProductos,pag:PaginaActual }),
                 contentType: "application/json; chartset=utf-8",
                 success: function (response) {
-                    $("#mostrarProducto").html("");
-                    $("#mostrarProducto").LoadingOverlay("hide");
+                    $("#ContenedorDeProductos").html("");
+                    $("#ContenedorDeProductos").LoadingOverlay("hide");
                     console.log(response);
-                    $.each(response.data, function (index, elemento) {
+                    $.each(response.Items, function (index, elemento) {
                         console.log(elemento);
                         $("<div>").addClass("row").append(
                             $("<div>").addClass("col-lg-12").append(
-                        	    $("<div>").addClass("card mb-3 ").append(
+                                $("<div>").addClass("card mb-3 ").append(
                                     $("<div>").addClass("row g-0 ").append(
                                         $("<div>").addClass("col-auto").append(
                                             $("<img>").addClass("img-fluid rounded-start m-1 mt-1").height(120).width(120).attr({ "src": "data:image/jpeg;base64," + elemento.Imagen }),
@@ -161,10 +173,63 @@
                                                         $("<a>").addClass("btn btn-outline-secondary btn-block mt-auto").attr({ "href": "@Url.Action("DetalleProducto","Tienda")" + "?productoId=" + elemento.ProductoId }).text("Ver Detalle")
                                                     ),
                                                     $("<div>").addClass("col-auto").append(
-                                                        @if (Session["Correo"]!=null)
-{
-                                                            //@:$("<a>").addClass("btn btn-success").attr({ "href": "@Url.Action("Agregar","Carrito")" + "?productoId=" + elemento.ProductoId }).text("Agregar al Carrito"),
-                                                            @:$("<button>").addClass("btn btn-success mt-auto AgregarAlCarrito").data("productoid", elemento.ProductoId).text("Agregar a Carrito"),
+                                                        @if (Session["Correo"] != null) {
+                                                            @: $("<button>").addClass("btn btn-success mt-auto AgregarAlCarrito").data("productoid", elemento.ProductoId).text("Agregar a Carrito"),
+                                                        }
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        ).appendTo("#ContenedorDeProductos");
+        });
+                },
+        beforeSend: function () {
+            $("#ContenedorDeProductos").LoadingOverlay("show");
+        },
+        error: function () {
+
+        }
+            });
+        }
+        // MOSTRAR LOS PRODUCTOS BUCK UP
+        @* function MostrarProductos(CategoriaSeleccionadaId) {
+            jQuery.ajax({
+                url: "@Url.Action("ListarProductos","Tienda")",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify({ CategoriaId: CategoriaSeleccionadaId }),
+                contentType: "application/json; chartset=utf-8",
+                success: function (response) {
+                    $("#mostrarProducto").html("");
+                    $("#mostrarProducto").LoadingOverlay("hide");
+                    console.log(response);
+                    $.each(response.data, function (index, elemento) {
+                        console.log(elemento);
+                        $("<div>").addClass("row").append(
+                            $("<div>").addClass("col-lg-12").append(
+                                $("<div>").addClass("card mb-3 ").append(
+                                    $("<div>").addClass("row g-0 ").append(
+                                        $("<div>").addClass("col-auto").append(
+                                            $("<img>").addClass("img-fluid rounded-start m-1 mt-1").height(120).width(120).attr({ "src": "data:image/jpeg;base64," + elemento.Imagen }),
+                                        ),
+                                        $("<div>").addClass("col-auto ").append(
+                                            $("<div>").addClass("card-body").append(
+                                                $("<h5>").addClass("card-title ").text(elemento.NombreProducto),
+                                                "$ " + elemento.PrecioUnitario.toFixed(2)
+                                            )
+                                        ),
+                                        $("<div>").addClass("card-footer p-4 pt-0 border-top-0 bg-transparent").append(
+                                            $("<div>").addClass("row").append(
+                                                $("<div>").addClass("col-auto").append(
+                                                    $("<div>").addClass("col-auto").append(
+                                                        $("<a>").addClass("btn btn-outline-secondary btn-block mt-auto").attr({ "href": "@Url.Action("DetalleProducto","Tienda")" + "?productoId=" + elemento.ProductoId }).text("Ver Detalle")
+                                                    ),
+                                                    $("<div>").addClass("col-auto").append(
+                                                        @if (Session["Correo"] != null) {
+                            @: $("<button>").addClass("btn btn-success mt-auto AgregarAlCarrito").data("productoid", elemento.ProductoId).text("Agregar a Carrito"),
                                                         }
                                                     )
                                                 )
@@ -174,16 +239,16 @@
                                 )
                             )
                         ).appendTo("#mostrarProducto");
-                    });
+        });
                 },
-                beforeSend: function () {
-                    $("#mostrarProducto").LoadingOverlay("show");
-                },
-                error: function () {
+        beforeSend: function () {
+            $("#mostrarProducto").LoadingOverlay("show");
+        },
+        error: function () {
 
-                }
-            });
         }
+            });
+        }*@
 
     </script>
 }

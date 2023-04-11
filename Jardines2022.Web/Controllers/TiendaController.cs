@@ -4,14 +4,10 @@ using Jardines2022.Servicios.Servicios;
 using Jardines2022.Servicios.Servicios.IServicios;
 using Jardines2022.Web.App_Start;
 using Jardines2022.Web.Models.Producto;
-using System;
+using System.Web.Mvc;
+using Jardines2022.Entidades.Entidades;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Web;
-using System.Web.Mvc;
-using Jardines2022.Web.Helpers;
-using Jardines2022.Entidades.Entidades;
 
 namespace Jardines2022.Web.Controllers
 {
@@ -45,6 +41,17 @@ namespace Jardines2022.Web.Controllers
                 return View();
             }
         }
+        public ActionResult GetData(int pag=1,int porPag = 10)
+        {
+            var data = servicio.GetLista();
+            data = new List<Producto>();
+            var result = new
+            {
+                ItemsTotales = data.Count,
+                Items = data.Skip((pag - 1) * porPag).Take(porPag)
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
         [HttpGet]
         public JsonResult ListarCategorias()
         {
@@ -52,27 +59,26 @@ namespace Jardines2022.Web.Controllers
             return Json(new { data = lista }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult ListarProductos(int categoriaID)
+        public JsonResult ListarProductos(int categoriaID,int porPag,int pag)
         {
             var lista = servicio.GetListaProductosPorCategorias(categoriaID);
             foreach (var producto in lista)
             {
                 producto.Imagen = Helpers.HelperImagenes.Conversor(producto.Imagen);
             }
-            var jsonResultado = Json(new { data = lista }, JsonRequestBehavior.AllowGet);
-            jsonResultado.MaxJsonLength = int.MaxValue;
-            return jsonResultado;
+            var result = new
+            {
+                ItemsTotales = lista.Count,
+                Items = lista.Skip((pag - 1) * porPag).Take(porPag)
+            };
+            var jsonResult = Json(result, JsonRequestBehavior.AllowGet);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
+
+            //var jsonResultado = Json(new { data = lista }, JsonRequestBehavior.AllowGet);
+            //jsonResultado.MaxJsonLength = int.MaxValue;
+            //return jsonResultado;
         }
-        //private static string Conversor(string ruta)
-        //{
-        //    if (ruta==null)
-        //    {
-        //        ruta = "C:/Proyectos/Jardines2022FedericoL-master/Jardines2022.Web/Content/assets/img/Muestra/Imagen_no_disponible.png"; 
-        //    }
-        //    byte[] imgArray = System.IO.File.ReadAllBytes(ruta);
-        //    string base64Imagen = Convert.ToBase64String(imgArray);
-        //    return base64Imagen;
-        //}
 
         [HttpGet]
         public ActionResult DetalleProducto(int productoID)
