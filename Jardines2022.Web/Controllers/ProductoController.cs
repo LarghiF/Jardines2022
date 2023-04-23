@@ -3,7 +3,9 @@ using Jardines2022.Servicios.Servicios;
 using Jardines2022.Servicios.Servicios.IServicios;
 using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Text;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Jardines2022.Web.Controllers
@@ -49,10 +51,15 @@ namespace Jardines2022.Web.Controllers
                 Producto productoRecibido = new Producto();
                 productoRecibido = JsonConvert.DeserializeObject<Producto>(objeto);
                 mensaje = Validar(productoRecibido);
-                if (mensaje==String.Empty)
+                if (mensaje == String.Empty)
                 {
                     if (!servicio.Existe(productoRecibido))
                     {
+                        if (productoRecibido.Imagen != null)
+                        {
+                            var nombre = Path.GetFileName(productoRecibido.Imagen);
+                            productoRecibido.Imagen = nombre;
+                        }
                         servicio.Guardar(productoRecibido);
                         resultado = productoRecibido.ProveedorId;
                         mensaje = "Producto agregado/editado con exito!";
@@ -74,6 +81,41 @@ namespace Jardines2022.Web.Controllers
                 mensaje = e.Message;
             }
             return Json(new { resultado = resultado, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult GuardarImagen(HttpPostedFileBase imagen)
+        {
+            object resultado = null;
+            string mensaje = string.Empty;
+            try
+            {
+                var nombre = Path.GetFileName(imagen.FileName);
+                var ruta = Path.Combine(Server.MapPath("~/Content/assets/img/Productos/"), nombre);
+                imagen.SaveAs(ruta);
+                resultado = true;
+                mensaje = "Guardado";
+            }
+            catch (Exception e)
+            {
+                resultado = 0;
+                mensaje = e.Message;
+            }
+            return Json(new { resultado = resultado, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult getBase64(int ID)
+        {
+            var base64Imagen = "";
+            if (ID != 0)
+            {
+                Producto p = servicio.GetProductoPorId(ID);
+                base64Imagen = Helpers.HelperImagenes.Conversor(p.Imagen);
+            }
+            else
+            {
+                base64Imagen = Helpers.HelperImagenes.Conversor(null);
+            }
+            return Json(new { data = base64Imagen }, JsonRequestBehavior.AllowGet);
         }
 
         private string Validar(Producto producto)

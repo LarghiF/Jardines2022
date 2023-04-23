@@ -43,7 +43,7 @@
     </main>
 </div>
 <!-- Inicio del modal -->
-<div class="modal fade modal-lg" id="FormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+<div class="modal fade modal-xl" id="FormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
@@ -53,76 +53,72 @@
             <div class="modal-body">
                 <input type="hidden" id="txtProductoId" value="0" />
                 <div class="row">
-                    <div class="col-md-6">
-                        <label for="txtNombreProducto" class="form-label">Nombre del Producto</label>
-                        <input type="text" class="form-control" id="txtNombreProducto" placeholder="Ingrese el nombre">
+                    <div class="col-8">
+                        <div class="row">
+                            <div class="col-sm-auto">
+                                <label for="txtNombreProducto" class="form-label">Nombre del Producto</label>
+                                <input type="text" class="form-control" id="txtNombreProducto" placeholder="Ingrese el nombre">
+                            </div>
+
+                            <div class="col-sm-auto">
+                                <label for="txtNombreLatin" class="form-label">Nombre en Latín</label>
+                                <input type="text" class="form-control" id="txtNombreLatin" placeholder="Ingrese el nombre en latín">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row mt-3">
+                                <div class="col-sm-auto">
+                                    <label for="cboProveedor" class="form-label">Proveedor</label>
+                                    <select id="cboProveedor" class="form-select" aria-label="Default select example">
+                                    </select>
+                                </div>
+                                <div class="col-sm-auto">
+                                    <label for="cboCategoria" class="form-label">Categoria</label>
+                                    <select id="cboCategoria" class="form-select" aria-label="Default select example">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-sm-auto">
+                                <label for="txtPrecioUnitario" class="form-label">Precio Unitario</label>
+                                <input type="text" class="form-control" id="txtPrecioUnitario" placeholder="00,00$">
+                            </div>
+                            <div class="col-sm-auto">
+                                <label for="txtStock" class="form-label">Stock</label>
+                                <input type="text" class="form-control" id="txtStock" placeholder="Ingrese el Stock">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-sm-auto">
+                                <label for="txtLVLReposicion" class="form-label">Reposición</label>
+                                <input type="text" class="form-control" id="txtLVLReposicion" placeholder="Unidades en el almacén">
+                            </div>
+                            <div class="col-sm-auto">
+                                <label for="txtUnidadesPedidas" class="form-label">Pedido</label>
+                                <input type="text" class="form-control" id="txtUnidadesPedidas" placeholder="Unidades Pedidas">
+                            </div>
+
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-sm-auto">
+                                <label for="cboSuspendido" class="form-label">Suspendido</label>
+                                <select id="cboSuspendido" class="form-select" aria-label="Default select example">
+                                    <option value="1">SI</option>
+                                    <option value="0">NO</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="col-md-6">
-                        <label for="txtNombreLatin" class="form-label">Nombre en Latín</label>
-                        <input type="text" class="form-control" id="txtNombreLatin" placeholder="Ingrese el nombre en latín">
-
+                    <!--FRM IMAGEN-->
+                    <div class="col-4" id="ContenedorImagen">
+                        <img id="fotoProducto" width="300" height="300" src="..." />
+                        <form class="col-auto mt-4" id="frmImagen" method="post" enctype="multipart/form-data">
+                            <input type="file" id="imagen" name="imagen" accept=".jpg,.png,.jpeg" />
+                            @*<button type="submit" id="btnSubir">Subir</button>*@
+                        </form>
                     </div>
-
                 </div>
-
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <label for="cboProveedor" class="form-label">Proveedor</label>
-                        <select id="cboProveedor" class="form-select" aria-label="Default select example">
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="cboCategoria" class="form-label">Categoria</label>
-                        <select id="cboCategoria" class="form-select" aria-label="Default select example">
-                        </select>
-                    </div>
-
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <label for="txtPrecioUnitario" class="form-label">Precio Unitario</label>
-                        <input type="text" class="form-control" id="txtPrecioUnitario" placeholder="00,00$">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="txtStock" class="form-label">Stock</label>
-                        <input type="text" class="form-control" id="txtStock" placeholder="Ingrese el Stock">
-                    </div>
-
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <label for="txtLVLReposicion" class="form-label">Reposición</label>
-                        <input type="text" class="form-control" id="txtLVLReposicion" placeholder="Unidades en el almacén">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="txtUnidadesPedidas" class="form-label">Pedido</label>
-                        <input type="text" class="form-control" id="txtUnidadesPedidas" placeholder="Unidades Pedidas">
-                    </div>
-
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <label for="cboSuspendido" class="form-label">Suspendido</label>
-
-                        <select id="cboSuspendido" class="form-select" aria-label="Default select example">
-                            <option value="1">SI</option>
-                            <option value="0">NO</option>
-                        </select>
-                    </div>
-
-                    <input type="file" class="form-control" id="imagen" accept="img/*" style="display:none" />
-
-
-                    <div class="col-md-6">
-                        <label for="IMGMuestra" class="form-label">Imagen de muestra</label>
-                        <input type="text" disabled class="form-control" id="IMGMuestra" placeholder="...">
-                    </div>
-                </div>
-
-
-
-
                 <div class="row mt-3">
                     <div class="col-12">
                         <div id="mensajeError" class="alert alert-danger" role="alert">
@@ -130,11 +126,9 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+                <button type="button" class="btn btn-primary" onclick="GuardarProducto()">Guardar</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -151,12 +145,16 @@
             cargarTabla();
             cargarCboCategorias();
             cargarCboProveedores();
+            // VARIABLES
+            const archivo = document.querySelector("#imagen");
+            const fotoDelProducto = document.querySelector("#fotoProducto");
             $("#tabla tbody").on("click", '.btn-editar',
                 function () {
                     //filaSeleccionada = $(this).closest("tr");
                     filaSeleccionada = $(this).slideUp("tr");
                     var datos = tabla.row(filaSeleccionada).data();
                     abrirModal(datos);
+
                 });
             $("#tabla tbody").on("click", ".btn-borrar",
                 function () {
@@ -175,7 +173,6 @@
                         confirmButtonText: "SI",
                         cancelButtonText: "NO",
                         closeOnConfirm: false
-
                     },
                         function () {
                             jQuery.ajax({
@@ -199,6 +196,18 @@
                     );
 
                 });
+            //GUARDAR LA IMAGEN
+            archivo.addEventListener('change', function () {
+                const archivoSeleccionado = this.files[0];
+                if (archivoSeleccionado) {
+                    const lectorDeArchivos = new FileReader();
+                    lectorDeArchivos.addEventListener('load', function () {
+                        fotoDelProducto.setAttribute('src', lectorDeArchivos.result);
+                    });
+                    lectorDeArchivos.readAsDataURL(archivoSeleccionado);
+                    console.log(archivoSeleccionado);
+                }
+            });
         });
         //CARGARA DATOS A LA TABLA
         function cargarTabla() {
@@ -245,7 +254,6 @@
                         "orderable": false,
                         "searchable": false,
                         "width": "90px"
-
                     }
                 ],
                 "language": {
@@ -266,7 +274,8 @@
             $("#txtLVLReposicion").val("");
             $("#txtUnidadesPedidas").val("");
             $("#cboSuspendido").val(0);
-            if (jsonProducto!=null) {
+            $("#fotoProducto").attr("src","/Content/assets/img/Muestra/Imagen_no_disponible.png");
+            if (jsonProducto != null) {
                 $("#txtProductoId").val(jsonProducto.ProductoId);
                 $("#txtNombreProducto").val(jsonProducto.NombreProducto);
                 $("#txtNombreLatin").val(jsonProducto.NombreLatin);
@@ -276,9 +285,31 @@
                 $("#txtStock").val(jsonProducto.UnidadesEnStock);
                 $("#txtLVLReposicion").val(jsonProducto.NivelDeReposicion);
                 $("#txtUnidadesPedidas").val(jsonProducto.UnidadesEnPedido);
-                $("#cboSuspendido").val(jsonProducto.Suspendido==true?1:0);
+                $("#cboSuspendido").val(jsonProducto.Suspendido == true ? 1 : 0);
+                console.log(jsonProducto.Imagen);
+                if (jsonProducto.Imagen != null) {
+                    CargarImagen(jsonProducto.ProductoId);
+                }
             }
             $("#FormModal").modal("show");
+        }
+        //CARGAR IMAGEN
+        function CargarImagen(productoId) {
+            jQuery.ajax({
+                url: "@Url.Action("getBase64", "Producto")",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify({ ID: productoId }),
+                contentType: "application/json; chartset=utf-8",
+                success: function (response) {
+                    console.log(response);
+                    $("#fotoProducto").hide();
+                    $("<div>").addClass("col-4").append(
+                        $("<img>").height(300).width(300).attr({ "src": "data:image/jpeg;base64," + response.data })
+                    ).appendTo("#ContenedorImagen");
+                    //fotoDelProducto.setAttribute({ "src": "data:image/jpeg;base64," + response });
+                }
+            })
         }
         //CARGAR LOS COMBOS DEL MODAL
         function cargarCboCategorias() {
@@ -301,7 +332,6 @@
 
                 }
              });
-
         }
         function cargarCboProveedores() {
             jQuery.ajax({
@@ -323,8 +353,29 @@
                 }
             });
         }
+        //GUARDAR IMAGEN
+        function GuardarImagen() {
+            var formData = new FormData();
+            formData.append("imagen", $("#imagen")[0].files[0]);
+            debugger;
+            if (formData != null) {
+                $.ajax({
+                    url: "@Url.Action("GuardarImagen","Producto")",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus + ': ' + errorThrown);
+                    }
+                });
+            }
+        }
         //GUARDAR PRODUCTO
-        function Guardar() {
+        function GuardarProducto() {
             var producto = {
                 ProductoId: $("#txtProductoId").val(),
                 NombreProducto: $("#txtNombreProducto").val(),
@@ -343,14 +394,13 @@
                 UnidadesEnStock: $("#txtStock").val(),
                 UnidadesEnPedido: $("#txtUnidadesPedidas").val(),
                 NivelDeReposicion: $("#txtLVLReposicion").val(),
-                Suspendido: $("#cboSuspendido").val() == 1 ? true : false
-
+                Suspendido: $("#cboSuspendido").val() == 1 ? true : false,
+                Imagen:$("#imagen").val()
             };
             console.log(producto);
             debugger;
             var request = new FormData();
             request.append("objeto", JSON.stringify(producto));
-
             jQuery.ajax({
                 url: "@Url.Action("Guardar","Producto")",
                 type: "POST",
@@ -358,6 +408,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    GuardarImagen();
                     $(".modal-body").LoadingOverlay("hide");
 
                     if (producto.ProductoId == 0) {
@@ -381,7 +432,7 @@
                         }
                     }
                 },
-                error: function (error) {},
+                error: function (error) { },
                 beforeSend: function () {
                     $(".modal-body").LoadingOverlay("show", {
                         imageResizeFactory: 2,
@@ -389,10 +440,10 @@
                         size: 14
                     });
                 }
-
             });
-
         }
+
+
 
     </script>
 }
