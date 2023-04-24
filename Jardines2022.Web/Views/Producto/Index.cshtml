@@ -286,7 +286,6 @@
                 $("#txtLVLReposicion").val(jsonProducto.NivelDeReposicion);
                 $("#txtUnidadesPedidas").val(jsonProducto.UnidadesEnPedido);
                 $("#cboSuspendido").val(jsonProducto.Suspendido == true ? 1 : 0);
-                console.log(jsonProducto.Imagen);
                 if (jsonProducto.Imagen != null) {
                     CargarImagen(jsonProducto.ProductoId);
                 }
@@ -302,12 +301,7 @@
                 data: JSON.stringify({ ID: productoId }),
                 contentType: "application/json; chartset=utf-8",
                 success: function (response) {
-                    console.log(response);
-                    $("#fotoProducto").hide();
-                    $("<div>").addClass("col-4").append(
-                        $("<img>").height(300).width(300).attr({ "src": "data:image/jpeg;base64," + response.data })
-                    ).appendTo("#ContenedorImagen");
-                    //fotoDelProducto.setAttribute({ "src": "data:image/jpeg;base64," + response });
+                    $("#fotoProducto").attr({ "src": "data:image/jpeg;base64," + response.data });
                 }
             })
         }

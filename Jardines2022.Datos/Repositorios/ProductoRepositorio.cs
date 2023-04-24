@@ -4,6 +4,7 @@ using Jardines2022.Entidades.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 
 namespace Jardines2022.Datos.Repositorios
@@ -20,6 +21,11 @@ namespace Jardines2022.Datos.Repositorios
         {
             try
             {
+                string[] archivoABorrar = Directory.GetFiles("C:/Proyectos/Jardines2022FedericoL-master/Jardines2022.Web/Content/assets/img/Productos/", producto.Imagen);
+                foreach (string item in archivoABorrar)
+                {
+                    File.Delete(item);
+                }
                 context.Entry(producto).State = EntityState.Deleted;
                 context.SaveChanges();
             }
@@ -120,6 +126,14 @@ namespace Jardines2022.Datos.Repositorios
                     {
                         throw new Exception("No se ha encontrado el producto.");
                     }
+                    if (productoEnDb.Imagen!=producto.Imagen)
+                    {
+                        string[] archivoABorrar = Directory.GetFiles("C:/Proyectos/Jardines2022FedericoL-master/Jardines2022.Web/Content/assets/img/Productos/", productoEnDb.Imagen);
+                        foreach (string item in archivoABorrar)
+                        {
+                            File.Delete(item);
+                        }
+                    }
                     productoEnDb.ProductoId = producto.ProductoId;
                     productoEnDb.NombreProducto= producto.NombreProducto;
                     productoEnDb.NombreLatin= producto.NombreLatin;
@@ -130,6 +144,7 @@ namespace Jardines2022.Datos.Repositorios
                     productoEnDb.NivelDeReposicion= producto.NivelDeReposicion;
                     productoEnDb.UnidadesEnPedido= producto.UnidadesEnPedido;
                     productoEnDb.Suspendido= producto.Suspendido;
+                    productoEnDb.Imagen = producto.Imagen;
                     context.Entry(productoEnDb).State = EntityState.Modified;
                 }
                 context.SaveChanges();

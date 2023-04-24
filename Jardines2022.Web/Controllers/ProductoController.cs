@@ -55,6 +55,7 @@ namespace Jardines2022.Web.Controllers
                 {
                     if (!servicio.Existe(productoRecibido))
                     {
+                        var p = servicio.GetProductoPorId(productoRecibido.ProductoId);
                         if (productoRecibido.Imagen != null)
                         {
                             var nombre = Path.GetFileName(productoRecibido.Imagen);
