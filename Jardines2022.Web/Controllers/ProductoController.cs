@@ -56,10 +56,14 @@ namespace Jardines2022.Web.Controllers
                     if (!servicio.Existe(productoRecibido))
                     {
                         var p = servicio.GetProductoPorId(productoRecibido.ProductoId);
-                        if (productoRecibido.Imagen != null)
+                        if (productoRecibido.Imagen != null && productoRecibido.Imagen != "")
                         {
                             var nombre = Path.GetFileName(productoRecibido.Imagen);
                             productoRecibido.Imagen = nombre;
+                        }
+                        if (productoRecibido.Imagen=="")
+                        {
+                            productoRecibido.Imagen = null;
                         }
                         servicio.Guardar(productoRecibido);
                         resultado = productoRecibido.ProveedorId;
@@ -118,7 +122,6 @@ namespace Jardines2022.Web.Controllers
             }
             return Json(new { data = base64Imagen }, JsonRequestBehavior.AllowGet);
         }
-
         private string Validar(Producto producto)
         {
             StringBuilder sb = new StringBuilder();
@@ -134,12 +137,10 @@ namespace Jardines2022.Web.Controllers
             {
                 sb.AppendLine("Debe seleccionar una categoria." + Environment.NewLine);
             }
-
             if (producto.PrecioUnitario==0)
             {
                 sb.AppendLine("Debe ingresar el precio." + Environment.NewLine);
             }
-
             if (producto.UnidadesEnStock==0)
             {
                 sb.AppendLine("Debe ingresar la cantidad de unidades." + Environment.NewLine);

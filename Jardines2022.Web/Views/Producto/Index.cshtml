@@ -128,7 +128,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="GuardarProducto()">Guardar</button>
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -196,16 +196,24 @@
                     );
 
                 });
-            //GUARDAR LA IMAGEN
+            //CARGAR LA IMAGEN
             archivo.addEventListener('change', function () {
+                const tamanioMax = 1048576;
                 const archivoSeleccionado = this.files[0];
                 if (archivoSeleccionado) {
-                    const lectorDeArchivos = new FileReader();
-                    lectorDeArchivos.addEventListener('load', function () {
-                        fotoDelProducto.setAttribute('src', lectorDeArchivos.result);
-                    });
-                    lectorDeArchivos.readAsDataURL(archivoSeleccionado);
-                    console.log(archivoSeleccionado);
+                    if (archivoSeleccionado.size > tamanioMax) {
+                        archivo.value = null;
+                        $("#mensajeError").text("La imagen seleccionada supera el maximo permitido de 1mb");
+                        $("#mensajeError").show();
+                    }
+                    else {
+                        const lectorDeArchivos = new FileReader();
+                        lectorDeArchivos.addEventListener('load', function () {
+                            fotoDelProducto.setAttribute('src', lectorDeArchivos.result);
+                        });
+                        lectorDeArchivos.readAsDataURL(archivoSeleccionado);
+                        console.log(archivoSeleccionado);
+                    }
                 }
             });
         });
@@ -292,7 +300,7 @@
             }
             $("#FormModal").modal("show");
         }
-        //CARGAR IMAGEN
+        //CARGAR IMAGEN DE LA BASE DE DATOS Y MOSTRARLA EN BASE64
         function CargarImagen(productoId) {
             jQuery.ajax({
                 url: "@Url.Action("getBase64", "Producto")",
@@ -301,6 +309,7 @@
                 data: JSON.stringify({ ID: productoId }),
                 contentType: "application/json; chartset=utf-8",
                 success: function (response) {
+                    console.log(response.data);
                     $("#fotoProducto").attr({ "src": "data:image/jpeg;base64," + response.data });
                 }
             })
@@ -402,9 +411,11 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
-                    GuardarImagen();
+                    //console.log(data.Imagen);
+                    //if (data.Imagen != null) {
+                    //    GuardarImagen();
+                    //}
                     $(".modal-body").LoadingOverlay("hide");
-
                     if (producto.ProductoId == 0) {
                         debugger;
                         if (data.resultado != 0) {
@@ -437,7 +448,10 @@
             });
         }
 
-
+        function Guardar() {
+            GuardarProducto();
+            GuardarImagen();
+        }
 
     </script>
 }

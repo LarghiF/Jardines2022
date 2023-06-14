@@ -126,7 +126,7 @@ namespace Jardines2022.Datos.Repositorios
                     {
                         throw new Exception("No se ha encontrado el producto.");
                     }
-                    if (productoEnDb.Imagen!=producto.Imagen)
+                    if (productoEnDb.Imagen!=null && productoEnDb.Imagen != producto.Imagen)
                     {
                         string[] archivoABorrar = Directory.GetFiles("C:/Proyectos/Jardines2022FedericoL-master/Jardines2022.Web/Content/assets/img/Productos/", productoEnDb.Imagen);
                         foreach (string item in archivoABorrar)
